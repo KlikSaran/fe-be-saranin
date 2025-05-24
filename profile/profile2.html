@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Pengguna</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .profile-header {
+      padding: 20px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #FFA500;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .profile-avatar-edit {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background: rgba(0,0,0,0.5);
+      color: white;
+      width: 100%;
+      text-align: center;
+      padding: 5px;
+      font-size: 12px;
+      border-radius: 0 0 50% 50%;
+      display: none;
+    }
+    
+    .profile-avatar:hover .profile-avatar-edit {
+      display: block;
+    }
+    
+    .profile-name {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    
+    .profile-edit {
+      color: #FFA500;
+      font-size: 14px;
+      margin-top: 5px;
+      cursor: pointer;
+    }
+    
+    .sidebar {
+      width: 250px;
+      float: left;
+      border-right: 1px solid #eee;
+      padding: 20px 0;
+    }
+    
+    .sidebar-item {
+      padding: 15px 20px;
+      cursor: pointer;
+      font-weight: 500;
+      color: #555;
+    }
+    
+    .sidebar-item.active {
+      color: #FFA500;
+      background: #FFF3E0;
+      border-right: 3px solid #FFA500;
+    }
+    
+    .content {
+      margin-left: 250px;
+      padding: 20px;
+    }
+    
+    .section-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    
+    .info-card {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    
+    .info-label {
+      color: #666;
+      width: 150px;
+    }
+    
+    .info-value {
+      flex: 1;
+      font-weight: 500;
+    }
+    
+    .info-action {
+      color: #FFA500;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .verified-badge {
+      background: #E3F2FD;
+      color: #1976D2;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .address-card {
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    
+    .address-primary {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: #FFA500;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    
+    .address-name {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .address-phone {
+      color: #666;
+      margin-bottom: 10px;
+    }
+    
+    .address-detail {
+      margin-bottom: 15px;
+      line-height: 1.5;
+    }
+    
+    .address-note {
+      color: #666;
+      font-style: italic;
+      margin-bottom: 15px;
+    }
+    
+    .address-actions {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .address-action {
+      color: #FFA500;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    
+    .add-address-btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      border: 1px dashed #FFA500;
+      border-radius: 8px;
+      background: #FFF3E0;
+      color: #FFA500;
+      font-weight: 500;
+      text-align: center;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    
+    /* Card Form Edit */
+    .form-card {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90%;
+      max-width: 500px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      padding: 25px;
+      z-index: 1000;
+    }
+    
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+    
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #666;
+    }
+    
+    .edit-form {
+      margin-top: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    
+    textarea.form-input {
+      min-height: 80px;
+      resize: vertical;
+    }
+    
+    .form-note {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+    }
+    
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    
+    .btn-secondary {
+      background: #f5f5f5;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+    
+    .btn-primary {
+      background: #FFA500;
+      color: white;
+      border: none;
+    }
+    
+    .btn-danger {
+      background: #f44336;
+      color: white;
+      border: none;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        float: none;
+        border-right: none;
+        border-bottom: 1px solid #eee;
+      }
+      
+      .content {
+        margin-left: 0;
+      }
+      
+      .form-card {
+        width: 95%;
+        padding: 20px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <navbar-component></navbar-component>
+
+  <div class="container">
+    <!-- Header Profil -->
+    <div class="profile-header">
+      <div class="profile-avatar-container">
+        <img src="https://via.placeholder.com/80" alt="Foto Profil" class="profile-avatar" id="profile-avatar">
+        <div class="profile-avatar-edit">Ubah Foto</div>
+      </div>
+      <div>
+        <div class="profile-name" id="profile-name">syamaidzar a s</div>
+        <div class="profile-edit" id="edit-photo-btn">Ubah Foto Profil</div>
+        <input type="file" id="photo-upload" accept="image/*" class="hidden">
+      </div>
+    </div>
+    
+    <div class="sidebar">
+      <div class="sidebar-item active" data-target="biodata-content">Biodata Diri</div>
+      <div class="sidebar-item" data-target="address-content">Daftar Alamat</div>
+    </div>
+    
+    <!-- Konten Biodata Diri -->
+    <div class="content" id="biodata-content">
+      <h2 class="section-title">Biodata Diri</h2>
+      
+      <div class="info-card">
+        <h3 class="section-title">Ubah Biodata Diri</h3>
+        <div class="info-row">
+          <div class="info-label">Nama</div>
+          <div class="info-value" id="display-name">syamaidzar a s</div>
+          <div class="info-action" onclick="openEditForm('name')">Ubah</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Tanggal Lahir</div>
+          <div class="info-value" id="display-birthdate">7 Februari 2002</div>
+          <div class="info-action" onclick="openEditForm('birthdate')">Ubah</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Jenis Kelamin</div>
+          <div class="info-value" id="display-gender">Pria</div>
+          <div class="info-action" onclick="openEditForm('gender')">Ubah</div>
+        </div>
+      </div>
+      
+      <div class="info-card">
+        <h3 class="section-title">Ubah Kontak</h3>
+        <div class="info-row">
+          <div class="info-label">Email</div>
+          <div class="info-value" id="display-email">syamadaniayah@gmail.com</div>
+          <div class="verified-badge">Terverifikasi</div>
+          <div class="info-action" onclick="openEditForm('email')">Ubah</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Nomor HP</div>
+          <div class="info-value" id="display-phone">6282229657300</div>
+          <div class="verified-badge">Terverifikasi</div>
+          <div class="info-action" onclick="openEditForm('phone')">Ubah</div>
+        </div>
+      </div>
+      
+      <div class="info-card">
+        <h3 class="section-title">Ubah Kata Sandi</h3>
+        <div class="info-row">
+          <div class="info-value">••••••••</div>
+          <div class="info-action" onclick="openEditForm('password')">Ubah</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Konten Daftar Alamat (Awalnya Disembunyikan) -->
+    <div class="content hidden" id="address-content">
+      <h2 class="section-title">Daftar Alamat</h2>
+      
+      <div id="address-list">
+        <!-- Alamat akan di-render oleh JavaScript -->
+      </div>
+      
+      <div class="add-address-btn" onclick="openAddAddressForm()">+ Tambah Alamat Baru</div>
+    </div>
+  </div>
+
+  <!-- Form Edit (Awalnya Disembunyikan) -->
+  <div id="form-container" class="hidden">
+    <div class="overlay" onclick="closeForm()"></div>
+    <div class="form-card">
+      <span class="close-btn" onclick="closeForm()">&times;</span>
+      <h3 class="section-title" id="form-title">Edit Data</h3>
+      <div class="edit-form" id="form-content">
+        <!-- Form akan diisi oleh JavaScript -->
+      </div>
+    </div>
+  </div>
+  <script src="../components/navbar.js"></script>
+  <script src="profile.js">
+    // Data Dummy (Database Sementara)
+   
+  </script>
+</body>
+</html>

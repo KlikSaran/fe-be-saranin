@@ -1,0 +1,34 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family: 'poppins',sans-serif;
+}
+
+.container-grid-luar{
+    display: grid;
+    padding: 1%;
+    grid-template-rows:7vh 1fr 100px ;
+    min-height: 100%;
+    height: 95vh;
+}
+
+.container-content1{
+    background-color: blue;
+}
+.container-content2{
+    background-color: red;
+    display: grid;
+    grid-template-columns: 100px 100px 1fr 100px;
+    min-width: 100%;
+    
+}
+
+.container-content2 > .void-content{
+    background-color: cyan;
+}
+.container-content2 > .content{
+    background-color: orange;
+}
+.container-content3{
+    background-color: greenyellow;
+}

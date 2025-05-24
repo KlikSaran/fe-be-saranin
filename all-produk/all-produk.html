@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Produk Toko</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+    h2 {
+      margin-left: 20px;
+    }
+
+    /* REKOMENDASI */
+    .recommendation-section {
+      padding: 20px 0;
+    }
+    .recommendation-slider-container {
+      position: relative;
+      overflow: hidden;
+      padding: 0 20px;
+    }
+    .recommendation-slider {
+      display: flex;
+      transition: transform 0.3s ease-in-out;
+      gap: 15px;
+    }
+    .recommendation-card {
+      background: linear-gradient(135deg, #FFA500, #ffffff);
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 180px; /* Lebar card diperkecil */
+      text-align: left;
+      padding: 12px; /* Padding diperkecil */
+      flex-shrink: 0;
+    }
+    .recommendation-card img {
+      width: 100%;
+      height: 100px; /* Tinggi gambar diperkecil */
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    .recommendation-card h4 {
+      margin: 0 0 5px 0;
+      font-size: 14px; /* Ukuran font diperkecil */
+      line-height: 1.3;
+    }
+    .recommendation-card p {
+      margin: 0;
+      font-size: 12px; /* Ukuran font diperkecil */
+      color: #555;
+      line-height: 1.3;
+    }
+    .product-price {
+      color: #FFA500;
+      font-weight: bold;
+      margin-top: 5px;
+      font-size: 14px;
+    }
+    .slider-controls {
+      text-align: center;
+      margin-top: 15px;
+    }
+    .slider-controls button {
+      padding: 8px 16px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 6px;
+      background-color: #FFA500;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+    .slider-controls button:hover {
+      background-color: #e69500;
+    }
+
+    /* SEMUA PRODUK */
+    .all-products-section {
+      padding: 0 20px 20px 20px;
+    }
+    .all-products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      padding: 16px;
+      text-align: left;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .product-card h4 {
+      margin: 0 0 5px 0;
+      font-size: 16px;
+    }
+    .product-card p {
+      margin: 0;
+      font-size: 14px;
+      color: #555;
+    }
+    .product-price {
+      color: #FFA500;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .recommendation-card {
+        width: 160px; /* Lebar lebih kecil di tablet */
+      }
+      .all-products {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+    }
+    @media (max-width: 480px) {
+      .recommendation-card {
+        width: 140px; /* Lebar lebih kecil di mobile */
+      }
+      .all-products {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <navbar-component></navbar-component>
+  <!-- REKOMENDASI -->
+  <section class="recommendation-section">
+    <h2>Rekomendasi untuk Anda</h2>
+    <div class="recommendation-slider-container">
+      <div class="recommendation-slider" id="recommendationSlider"></div>
+    </div>
+    <div class="slider-controls">
+      <button onclick="prevSlide()">Sebelumnya</button>
+      <button onclick="nextSlide()">Selanjutnya</button>
+    </div>
+  </section>
+
+  <!-- SEMUA PRODUK -->
+  <section class="all-products-section">
+    <h2>Semua Barang</h2>
+    <div class="all-products" id="allProducts"></div>
+  </section>
+  <script src="../components/navbar.js"></script>
+  <script>
+    // Data Dummy yang lebih realistis
+    const dataDummy = [
+      {
+        nama: "Kemeja Flanel",
+        deskripsi: "Kemeja pria bahan flanel nyaman",
+        harga: 149000,
+        img: "https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=150&q=80"
+      },
+      {
+        nama: "Celana Jeans",
+        deskripsi: "Celana jeans pria model slim",
+        harga: 249000,
+        img: "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=150&q=80"
+      },
+      {
+        nama: "Sneakers Sport",
+        deskripsi: "Sepatu olahraga nyaman",
+        harga: 349000,
+        img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=150&q=80"
+      },
+      {
+        nama: "Tas Ransel",
+        deskripsi: "Tas laptop anti air",
+        harga: 199000,
+        img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=150&q=80"
+      },
+      {
+        nama: "Jam Digital",
+        deskripsi: "Jam dengan banyak fitur",
+        harga: 179000,
+        img: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=150&q=80"
+      },
+      {
+        nama: "Headphone",
+        deskripsi: "Headphone nirkabel HD",
+        harga: 299000,
+        img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=150&q=80"
+      },
+      {
+        nama: "Kacamata",
+        deskripsi: "UV protection stylish",
+        harga: 129000,
+        img: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=150&q=80"
+      },
+      {
+        nama: "Dompet Kulit",
+        deskripsi: "Dompet kulit multifungsi",
+        harga: 99000,
+        img: "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=150&q=80"
+      },
+      {
+        nama: "Kaos Polo",
+        deskripsi: "Bahan katun adem",
+        harga: 89000,
+        img: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=150&q=80"
+      },
+      {
+        nama: "Jaket Hoodie",
+        deskripsi: "Bahan fleece tebal",
+        harga: 189000,
+        img: "https://images.unsplash.com/photo-1521223890158-f9f7c3d5d504?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=150&q=80"
+      }
+    ];
+
+    // === Rekomendasi ===
+    const maxRekomendasi = 10;
+    let currentSlide = 0;
+    let sliderWidth = 0;
+    let cardWidth = 0;
+
+    function renderRekomendasi() {
+      const container = document.getElementById('recommendationSlider');
+      container.innerHTML = '';
+
+      const data = dataDummy.slice(0, maxRekomendasi);
+      data.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'recommendation-card';
+        card.innerHTML = `
+          <img src="${item.img}" alt="${item.nama}" loading="lazy">
+          <h4>${item.nama}</h4>
+          <p>${item.deskripsi}</p>
+          <p class="product-price">${formatRupiah(item.harga)}</p>
+        `;
+        container.appendChild(card);
+      });
+      
+      // Hitung ulang dimensi slider setelah render
+      setTimeout(() => {
+        const slider = document.getElementById('recommendationSlider');
+        const card = document.querySelector('.recommendation-card');
+        if (card) {
+          cardWidth = card.offsetWidth + 15; // termasuk gap
+          sliderWidth = cardWidth * maxRekomendasi;
+          slider.style.width = `${sliderWidth}px`;
+        }
+        updateSliderPosition();
+      }, 100);
+    }
+
+    function updateSliderPosition() {
+      const slider = document.getElementById('recommendationSlider');
+      const container = document.querySelector('.recommendation-slider-container');
+      const containerWidth = container.offsetWidth;
+      const maxOffset = sliderWidth - containerWidth;
+      const offset = Math.min(currentSlide * containerWidth, maxOffset);
+      
+      slider.style.transform = `translateX(-${offset}px)`;
+    }
+
+    function nextSlide() {
+      const container = document.querySelector('.recommendation-slider-container');
+      const containerWidth = container.offsetWidth;
+      const maxPossibleSlides = Math.ceil((sliderWidth - containerWidth) / containerWidth);
+      
+      if (currentSlide < maxPossibleSlides) {
+        currentSlide++;
+        updateSliderPosition();
+      }
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateSliderPosition();
+      }
+    }
+
+    // === Semua Produk ===
+    function renderAllProducts() {
+      const container = document.getElementById('allProducts');
+      container.innerHTML = '';
+      dataDummy.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.innerHTML = `
+          <img src="${item.img}" alt="${item.nama}" loading="lazy">
+          <h4>${item.nama}</h4>
+          <p>${item.deskripsi}</p>
+          <p class="product-price">${formatRupiah(item.harga)}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Format Rupiah
+    function formatRupiah(angka) {
+      return 'Rp ' + angka.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    // Init dan event listener untuk responsive
+    window.addEventListener('DOMContentLoaded', () => {
+      renderRekomendasi();
+      renderAllProducts();
+    });
+
+    window.addEventListener('resize', () => {
+      renderRekomendasi();
+    });
+  </script>
+
+</body>
+</html>

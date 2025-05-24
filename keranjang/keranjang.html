@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keranjang Belanja</title>
+  <link rel="stylesheet" href="keranjang.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+   
+  </style>
+</head>
+<body>
+  <!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Keranjang Belanja</title>
+  <link rel="stylesheet" href="keranjang.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+   
+  </style>
+</head>
+<body>
+  <navbar-component></navbar-component>
+    <div class="main-container">
+    <!-- Card Daftar Belanja -->
+    <div class="cart-list">
+      <header class="cart-header">
+        <h2>Keranjang</h2>
+        <label class="select-all">
+          <input type="checkbox" class="item-check" id="select-all">
+          Pilih Semua (<span id="selected-count">0</span>)
+        </label>
+      </header>
+      
+      <div id="cart-items-container">
+        <!-- Items will be rendered here by JavaScript -->
+      </div>
+    </div>
+    
+    <!-- Card Total Belanja -->
+    <div class="summary-card">
+      <h3 class="summary-title">Total Belanja</h3>
+      <div class="total-section">
+        <span class="total-label">Subtotal (<span id="total-items">0</span> produk)</span>
+        <span class="total-price" id="total-price">Rp 0</span>
+      </div>
+      <button class="pay-btn" id="pay-btn" disabled>Bayar</button>
+    </div>
+  </div>
+
+  <script src="../components/navbar.js"></script>
+  <script>
+ // Dummy data for cart items
+    const cartItems = [
+      {
+        id: 1,
+        name: "LG slim 2.4 mm",
+        price: 200000,
+        image: "../images2/tv_elektronik_2.png",
+        quantity: 1,
+        selected: false
+      },
+      {
+        id: 2,
+        name: "Blender choper",
+        price: 200000,
+        image: "../images2/blender_elektronik_1.png",
+        quantity: 1,
+        selected: true
+      },
+      {
+        id: 3,
+        name: "Kabel Data Type C",
+        price: 50000,
+        image: "../images2/tv_elektronik_2.png",
+        quantity: 2,
+        selected: false
+      }
+    ];
+
+    // DOM Elements
+    const cartItemsContainer = document.getElementById('cart-items-container');
+    const selectAllCheckbox = document.getElementById('select-all');
+    const selectedCountSpan = document.getElementById('selected-count');
+    const totalItemsSpan = document.getElementById('total-items');
+    const totalPriceSpan = document.getElementById('total-price');
+    const payButton = document.getElementById('pay-btn');
+
+    // Render cart items /menampilkan semua item berdasarkan dummy
+    function renderCartItems() {
+      cartItemsContainer.innerHTML = '';
+      
+      cartItems.forEach(item => {
+        const cartItemElement = document.createElement('div');
+        cartItemElement.className = `cart-item ${item.selected ? 'selected' : ''}`;
+        cartItemElement.innerHTML = `
+          <input type="checkbox" class="item-check" ${item.selected ? 'checked' : ''} data-id="${item.id}">
+          <div class="item-image">
+            <img src="${item.image}" alt="${item.name}">
+          </div>
+          <div class="item-info">
+            <h3 class="item-name">${item.name}</h3>
+            <div class="item-price">Rp${item.price.toLocaleString('id-ID')}</div>
+          </div>
+          <div class="item-actions">
+            <div class="item-stock">
+              <button class="qty-btn minus" data-id="${item.id}">-</button>
+              <input type="text" value="${item.quantity}" class="qty" data-id="${item.id}">
+              <button class="qty-btn plus" data-id="${item.id}">+</button>
+            </div>
+            <button class="delete-btn" data-id="${item.id}">🗑️</button>
+          </div>
+        `;
+        cartItemsContainer.appendChild(cartItemElement);
+      });
+      
+      updateSummary();
+      attachEventListeners();
+    }
+
+    // Update summary information
+    function updateSummary() {
+      const selectedItems = cartItems.filter(item => item.selected);
+      const totalSelected = selectedItems.length;
+      const totalQuantity = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+      const totalPrice = selectedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      
+      selectedCountSpan.textContent = totalSelected;
+      totalItemsSpan.textContent = totalQuantity;
+      totalPriceSpan.textContent = `Rp${totalPrice.toLocaleString('id-ID')}`;
+      
+      // Update "Select All" checkbox state
+      selectAllCheckbox.checked = totalSelected > 0 && totalSelected === cartItems.length;
+      selectAllCheckbox.indeterminate = totalSelected > 0 && totalSelected < cartItems.length;
+      
+      // Enable/disable pay button
+      payButton.disabled = totalSelected === 0;
+    }
+
+    // Attach event listeners to dynamic elements
+    function attachEventListeners() {
+      // Item selection
+      document.querySelectorAll('.item-check').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+          const itemId = parseInt(this.dataset.id);
+          const item = cartItems.find(item => item.id === itemId);
+          item.selected = this.checked;
+          renderCartItems();
+        });
+      });
+      
+      // Quantity buttons
+      document.querySelectorAll('.qty-btn.minus').forEach(button => {
+        button.addEventListener('click', function() {
+          const itemId = parseInt(this.dataset.id);
+          const item = cartItems.find(item => item.id === itemId);
+          if (item.quantity > 1) {
+            item.quantity--;
+            renderCartItems();
+          }
+        });
+      });
+      
+      document.querySelectorAll('.qty-btn.plus').forEach(button => {
+        button.addEventListener('click', function() {
+          const itemId = parseInt(this.dataset.id);
+          const item = cartItems.find(item => item.id === itemId);
+          item.quantity++;
+          renderCartItems();
+        });
+      });
+      
+      // Quantity input
+      document.querySelectorAll('.qty').forEach(input => {
+        input.addEventListener('change', function() {
+          const itemId = parseInt(this.dataset.id);
+          const item = cartItems.find(item => item.id === itemId);
+          const newQuantity = parseInt(this.value) || 1;
+          item.quantity = Math.max(1, newQuantity);
+          renderCartItems();
+        });
+      });
+      
+      // Delete buttons
+      document.querySelectorAll('.delete-btn').forEach(button => {
+        button.addEventListener('click', function() {
+          const itemId = parseInt(this.dataset.id);
+          const index = cartItems.findIndex(item => item.id === itemId);
+          if (index !== -1) {
+            cartItems.splice(index, 1);
+            renderCartItems();
+          }
+        });
+      });
+    }
+
+    // Select All functionality
+    selectAllCheckbox.addEventListener('change', function() {
+      const isChecked = this.checked;
+      cartItems.forEach(item => {
+        item.selected = isChecked;
+      });
+      renderCartItems();
+    });
+
+    // Pay button functionality
+    payButton.addEventListener('click', function() {
+      const selectedItems = cartItems.filter(item => item.selected);
+      const totalPrice = selectedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      
+      alert(`Pembayaran berhasil!\nTotal: Rp${totalPrice.toLocaleString('id-ID')}`);
+      
+      // Remove selected items after payment
+      for (let i = cartItems.length - 1; i >= 0; i--) {
+        if (cartItems[i].selected) {
+          cartItems.splice(i, 1);
+        }
+      }
+      
+      renderCartItems();
+    });
+
+    // Initial render
+    renderCartItems();
+
+  </script>
+</body>
+</html>

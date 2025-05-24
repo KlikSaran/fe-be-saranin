@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracking Pesanan Saya</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="status-barang.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <navbar-component></navbar-component>
+  <div class="container">
+    <h1>Status Pesanan Saya</h1>
+    
+    <div class="status-buttons">
+      <button class="status-btn active" data-status="all">Semua</button>
+      <button class="status-btn" data-status="waiting">Menunggu Konfirmasi</button>
+      <button class="status-btn" data-status="processing">Diproses</button>
+      <button class="status-btn" data-status="shipping">Dikirim</button>
+      <button class="status-btn" data-status="success">Berhasil</button>
+      <button class="status-btn" data-status="failed">Tidak Berhasil</button>
+    </div>
+    
+    <div id="orders-container">
+      <!-- Order cards will be rendered here by JavaScript -->
+    </div>
+  </div>
+  <script src="../components/navbar.js"></script>
+  <script>
+    // Data dummy pesanan
+    const orders = [
+      {
+        id: 1,
+        date: "2023-05-15",
+        status: "waiting",
+        products: [
+          {
+            id: 101,
+            name: "LG slim 2.4 mm",
+            image: "../images2/tv_elektronik_2.png",
+            price: 200000,
+            quantity: 1
+          }
+        ]
+      },
+      {
+        id: 2,
+        date: "2023-05-10",
+        status: "processing",
+        products: [
+          {
+            id: 102,
+            name: "Blender choper",
+            image: "../images2/blender_elektronik_1.png",
+            price: 350000,
+            quantity: 2
+          },
+          {
+            id: 103,
+            name: "Kabel Data Type C",
+            image: "../images2/blender_elektronik_1.png",
+            price: 50000,
+            quantity: 3
+          }
+        ]
+      },
+      {
+        id: 3,
+        date: "2023-05-05",
+        status: "shipping",
+        products: [
+          {
+            id: 104,
+            name: "Smartphone X",
+            image: "https://via.placeholder.com/200?text=Smartphone",
+            price: 2500000,
+            quantity: 1
+          }
+        ]
+      },
+      {
+        id: 4,
+        date: "2023-05-01",
+        status: "success",
+        products: [
+          {
+            id: 105,
+            name: "Headphone Wireless",
+            image: "https://via.placeholder.com/200?text=Headphone",
+            price: 450000,
+            quantity: 1
+          }
+        ]
+      },
+      {
+        id: 5,
+        date: "2023-04-28",
+        status: "failed",
+        products: [
+          {
+            id: 106,
+            name: "Mouse Gaming",
+            image: "https://via.placeholder.com/200?text=Mouse",
+            price: 150000,
+            quantity: 2
+          }
+        ]
+      }
+    ];
+
+    // DOM Elements
+    const ordersContainer = document.getElementById('orders-container');
+    const statusButtons = document.querySelectorAll('.status-btn');
+
+    // Render orders based on status
+    function renderOrders(status = 'all') {
+      ordersContainer.innerHTML = '';
+      
+      const filteredOrders = status === 'all' 
+        ? orders 
+        : orders.filter(order => order.status === status);
+      
+      if (filteredOrders.length === 0) {
+        ordersContainer.innerHTML = '<div class="no-orders">Tidak ada pesanan dengan status ini</div>';
+        return;
+      }
+      
+      filteredOrders.forEach(order => {
+        const totalPrice = order.products.reduce((sum, product) => sum + (product.price * product.quantity), 0);
+        const totalItems = order.products.reduce((sum, product) => sum + product.quantity, 0);
+        
+        const orderElement = document.createElement('div');
+        orderElement.className = 'order-card';
+        
+        let statusText = '';
+        let statusClass = '';
+        
+        switch(order.status) {
+          case 'waiting':
+            statusText = 'Menunggu Konfirmasi';
+            statusClass = 'waiting';
+            break;
+          case 'processing':
+            statusText = 'Diproses';
+            statusClass = 'processing';
+            break;
+          case 'shipping':
+            statusText = 'Dikirim';
+            statusClass = 'shipping';
+            break;
+          case 'success':
+            statusText = 'Berhasil';
+            statusClass = 'success';
+            break;
+          case 'failed':
+            statusText = 'Tidak Berhasil';
+            statusClass = 'failed';
+            break;
+        }
+        
+        orderElement.innerHTML = `
+          <div class="order-header">
+            <div class="order-date">${formatDate(order.date)}</div>
+            <div class="status-label ${statusClass}">${statusText}</div>
+          </div>
+          ${order.products.map(product => `
+            <div class="order-content">
+              <img src="${product.image}" alt="${product.name}" class="product-image">
+              <div class="product-info">
+                <div class="product-name">${product.name}</div>
+                <div class="product-price">Rp${product.price.toLocaleString('id-ID')}</div>
+                <div class="quantity-info">Jumlah: ${product.quantity}</div>
+              </div>
+            </div>
+          `).join('')}
+          <div class="order-total">
+            Total: Rp${totalPrice.toLocaleString('id-ID')} (${totalItems} barang)
+          </div>
+        `;
+        
+        ordersContainer.appendChild(orderElement);
+      });
+    }
+
+    // Format date to Indonesian format
+    function formatDate(dateString) {
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString('id-ID', options);
+    }
+
+    // Add event listeners to status buttons
+    statusButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        statusButtons.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+        renderOrders(this.dataset.status);
+      });
+    });
+
+    // Initial render
+    renderOrders();
+  </script>
+</body>
+</html>

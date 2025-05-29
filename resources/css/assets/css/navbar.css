@@ -1,0 +1,304 @@
+/* It's highly recommended to move these styles to a separate CSS file (e.g., public/css/navbar.css)
+       and link it in your main layout or here using <link rel="stylesheet" href="{{ asset('css/navbar.css') }}"> */
+.navbar-component-wrapper {
+    /* Using a wrapper class for scoping instead of :host */
+    display: block;
+    --primary-color: #3734a9;
+    --hover-bg: #fff3e0;
+    font-family: "Poppins", sans-serif;
+}
+
+.navbar-component-wrapper * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-component-wrapper nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.navbar-component-wrapper nav .nav-brand {
+    /* Changed h2 to a class for better semantics */
+    color: #333;
+    font-weight: 700;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.navbar-component-wrapper .kategori-btn {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    border-radius: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: all 0.3s;
+    color: #555;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.navbar-component-wrapper .kategori-btn:hover {
+    background: var(--hover-bg);
+}
+
+.navbar-component-wrapper .kategori-btn.active {
+    background: var(--primary-color);
+    color: white;
+    font-weight: 600;
+}
+
+.navbar-component-wrapper .kategori-dropdown {
+    position: absolute;
+    top: 100%;
+    /* Adjust left/width if button position changes */
+    left: 5%;
+    /* This might need adjustment based on the Kategori button's position relative to the nav */
+    width: 90%;
+    /* Or a fixed width like 300px, or make it more dynamic */
+    max-width: 400px;
+    /* Example max-width */
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: none;
+    z-index: 1000;
+    /* Ensure it's above other content */
+}
+
+.navbar-component-wrapper .kategori-dropdown.show {
+    display: block;
+}
+
+.navbar-component-wrapper .kategori-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.navbar-component-wrapper .kategori-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #eee;
+}
+
+.navbar-component-wrapper .kategori-card:hover {
+    background-color: #f5f5f5;
+    transform: translateY(-3px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.navbar-component-wrapper .kategori-card img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.navbar-component-wrapper .kategori-card span {
+    font-size: 14px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.navbar-component-wrapper .container-search {
+    display: flex;
+    align-items: center;
+    width: 40%;
+    /* This might be too wide, adjust as needed */
+    min-width: 200px;
+    /* Ensure it doesn't get too small */
+    flex-grow: 1;
+    /* Allow it to take available space */
+    margin: 0 20px;
+    /* Add some margin */
+}
+
+.navbar-component-wrapper #input-search {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px 0 0 20px;
+    outline: none;
+    font-size: 14px;
+}
+
+.navbar-component-wrapper #btn-search {
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-left: none;
+    border-radius: 0 20px 20px 0;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: #555;
+}
+
+.navbar-component-wrapper #btn-search:hover {
+    background-color: #e0e0e0;
+}
+
+.navbar-component-wrapper .nav-icons {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.navbar-component-wrapper .nav-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #555;
+    font-size: 12px;
+    transition: all 0.3s;
+    font-weight: 500;
+    position: relative;
+    /* For potential badge counts */
+}
+
+.navbar-component-wrapper .nav-icon i {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.navbar-component-wrapper .nav-icon:hover {
+    color: var(--primary-color);
+}
+
+.navbar-component-wrapper .profile-container {
+    position: relative;
+}
+
+.navbar-component-wrapper .profile-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    /* Add some space from the icon */
+    right: 0;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    width: 180px;
+    display: none;
+    z-index: 1000;
+}
+
+.navbar-component-wrapper .profile-container:hover .profile-dropdown,
+    .navbar-component-wrapper .profile-container .nav-icon:focus+.profile-dropdown,
+    /* For accessibility */
+    .navbar-component-wrapper .profile-container .profile-dropdown:hover {
+    /* Keep open when hovering dropdown */
+    display: block;
+}
+
+.navbar-component-wrapper .profile-dropdown a,
+.navbar-component-wrapper .profile-dropdown button {
+    /* For logout button */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #555;
+    transition: all 0.3s;
+    font-size: 14px;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+}
+
+.navbar-component-wrapper .profile-dropdown a:hover,
+.navbar-component-wrapper .profile-dropdown button:hover {
+    background-color: #f5f5f5;
+    color: var(--primary-color);
+}
+
+.navbar-component-wrapper .divider {
+    height: 1px;
+    background-color: #eee;
+    margin: 5px 0;
+}
+
+@media (max-width: 992px) {
+    /* Adjusted breakpoint */
+    .navbar-component-wrapper .container-search {
+        display: none;
+        /* Hide search on medium screens, or make it a popup */
+    }
+
+    .navbar-component-wrapper nav {
+        padding: 15px 3%;
+    }
+
+    .navbar-component-wrapper .nav-icons {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar-component-wrapper .kategori-btn {
+        font-size: 13px;
+        /* Slightly smaller text */
+        padding: 6px 12px;
+    }
+
+    .navbar-component-wrapper .nav-brand {
+        font-size: 18px;
+    }
+
+    .navbar-component-wrapper .nav-icons {
+        gap: 15px;
+    }
+
+    .navbar-component-wrapper .nav-icon span {
+        display: none;
+        /* Hide text under icons on small screens */
+    }
+
+    .navbar-component-wrapper .nav-icon i {
+        font-size: 20px;
+        /* Make icons a bit bigger if text is hidden */
+        margin-bottom: 0;
+    }
+
+    .navbar-component-wrapper .kategori-dropdown {
+        left: 3%;
+        width: 94%;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-component-wrapper .kategori-btn span {
+        display: none;
+        /* Hide "Kategori" text, only show icon */
+    }
+
+    .navbar-component-wrapper .kategori-btn {
+        padding: 6px 10px;
+    }
+
+    .navbar-component-wrapper .nav-brand {
+        display: none;
+        /* Optionally hide brand on very small screens */
+    }
+}

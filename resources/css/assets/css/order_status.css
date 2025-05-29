@@ -1,0 +1,242 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.container {
+    width: 50%;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+h1 {
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* Tombol Status */
+.status-buttons {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+}
+
+.status-btn {
+    padding: 10px 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease-in-out;
+    font-weight: 500;
+    font-size: 14px;
+}
+#all-btn {
+    border: 2px solid #3734a9;
+    color: #3734a9;
+    background: white;
+}
+#pending-btn,
+#procces-btn,
+#send-btn {
+    color: #8e6c00;
+    border: 2px solid #ffeb3b;
+    background-color: #fffbe6;
+}
+
+#success-btn {
+    color: #2e7d32;
+    border: 2px solid #66bb6a;
+    background-color: #e8f5e9;
+}
+
+#failed-btn {
+    color: #c62828;
+    border: 2px solid #ef5350;
+    background-color: #ffebee;
+}
+
+#status-btn {
+    color: #000;
+    cursor: none;
+}
+
+#all-btn.active {
+    background: #3734a9;
+    color: white;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(55, 52, 169, 0.3);
+}
+
+#pending-btn.active,
+#procces-btn.active,
+#send-btn.active {
+    color: #000;
+    background: #ffeb3b;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(255, 235, 59, 0.3);
+}
+
+#success-btn.active {
+    color: #ffffff;
+    background: #66bb6a;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(102, 187, 106, 0.3);
+}
+
+#failed-btn.active {
+    color: #ffffff;
+    background: #ef5350;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(239, 83, 80, 0.3);
+}
+
+/* Kartu Pesanan */
+.transaction-card {
+    background: white;
+    border-radius: 14px;
+    padding: 24px;
+    margin-top: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+.transaction-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.transaction-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #eee;
+}
+
+.transaction-date {
+    color: #777;
+    font-size: 14px;
+}
+.transaction-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.transaction-header h3{
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.status-label {
+    font-weight: 300;
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 0.85rem;
+}
+
+.status-label.waiting {
+    background-color: #ffc107;
+}
+.status-label.processing {
+    background-color: #17a2b8;
+}
+.status-label.shipping {
+    background-color: #007bff;
+}
+.status-label.success {
+    background-color: #28a745;
+}
+.status-label.failed {
+    background-color: #dc3545;
+}
+.status-label.unknown {
+    background-color: #6c757d;
+}
+
+/* Konten Pesanan */
+.order-content {
+    display: flex;
+    gap: 18px;
+    margin-bottom: 15px;
+}
+
+.product-image {
+    width: 90px;
+    height: 90px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    background-color: #fafafa;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-name {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 6px;
+    color: #222;
+}
+
+.product-price {
+    color: #3734a9;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.quantity-info {
+    font-size: 14px;
+    color: #777;
+}
+
+.order-total {
+    text-align: right;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-weight: 600;
+    font-size: 15px;
+    color: #333;
+}
+
+/* Saat tidak ada pesanan */
+.no-orders {
+    text-align: center;
+    padding: 60px 0;
+    color: #888;
+    font-size: 16px;
+    font-style: italic;
+}
+
+/* Responsif */
+@media (max-width: 600px) {
+    .order-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .product-image {
+        width: 100%;
+        max-height: 200px;
+        border-radius: 12px;
+    }
+
+    .product-info {
+        margin-top: 10px;
+    }
+}

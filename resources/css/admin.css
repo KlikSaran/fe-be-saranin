@@ -1,0 +1,10 @@
+/* Admin Asset Files */
+/* Fonts */
+@import "./assets_admin/fonts/tabler-icons.min.css";
+@import "./assets_admin/fonts/feather.css";
+@import "./assets_admin/fonts/fontawesome.css";
+@import "./assets_admin/fonts/material.css";
+
+/* Template CSS Files */
+@import "./assets_admin/css/style.css";
+@import "./assets_admin/css/style-preset.css";

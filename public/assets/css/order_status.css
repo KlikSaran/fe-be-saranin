@@ -1,0 +1,172 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Style untuk tombol status */
+.status-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.status-btn {
+    padding: 8px 16px;
+    border: 2px solid #3734a9;
+    border-radius: 20px;
+    background: transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s;
+    color: #555;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.status-btn:hover {
+    background: #3734a9;
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.status-btn.active {
+    background: #3734a9;
+    color: white;
+    font-weight: 600;
+}
+
+/* Style untuk card pesanan */
+.order-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.order-date {
+    color: #666;
+    font-size: 14px;
+}
+
+.status-label {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-block;
+    border: 1.5px solid;
+}
+
+/* Warna label status */
+.status-label.waiting,
+.status-label.processing,
+.status-label.shipping {
+    color: #8e6c00;
+    background-color: #fff9c4;
+    border-color: #ffd600;
+}
+
+.status-label.success {
+    color: #1b5e20;
+    background-color: #c8e6c9;
+    border-color: #4caf50;
+}
+
+.status-label.failed {
+    color: #b71c1c;
+    background-color: #ffcdd2;
+    border-color: #f44336;
+}
+
+.order-content {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.product-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 1px solid #eee;
+}
+
+.product-info {
+    flex: 1;
+}
+
+.product-name {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #333;
+}
+
+.product-price {
+    color: #3734a9;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.quantity-info {
+    font-size: 14px;
+    color: #666;
+}
+
+.no-orders {
+    text-align: center;
+    padding: 50px 0;
+    color: #666;
+    font-size: 15px;
+}
+
+.order-total {
+    text-align: right;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .order-content {
+        flex-direction: column;
+    }
+
+    .product-image {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+    }
+}

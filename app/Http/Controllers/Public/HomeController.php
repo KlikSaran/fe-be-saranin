@@ -14,8 +14,8 @@ class HomeController extends Controller
     public function index()
     {
         $products = Product::orderBy('created_at', 'desc')->paginate(20);
-        $categories = Product::where('category', "!=", null)->limit(5)->get();
-        
+        $categories = Product::select('category')->distinct()->get();
+
         return view('public.home.index', compact('products', 'categories'));
     }
 

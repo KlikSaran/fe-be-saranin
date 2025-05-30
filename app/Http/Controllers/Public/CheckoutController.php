@@ -13,14 +13,10 @@ class CheckoutController extends Controller
 {
     public function preview(Request $request)
     {
-        $categories = Product::whereNotNull('category')
-            ->select('category')
-            ->distinct()
-            ->limit(5)
-            ->get();
+        $categories = Product::select('category')->distinct()->get();
 
-        $productIds = explode(',', $request->product_id); // untuk beli langsung
-        $detailIds = explode(',', $request->detail_transaction_id); // untuk dari keranjang
+        $productIds = explode(',', $request->product_id);
+        $detailIds = explode(',', $request->detail_transaction_id);
         $quantities = explode(',', $request->quantity);
         $subtotals = explode(',', $request->subtotals);
         $total = $request->total_price;
@@ -77,16 +73,13 @@ class CheckoutController extends Controller
             'user_id' => Auth::id(),
         ]);
 
-        // Mode keranjang
         if ($request->filled('detail_transaction_ids')) {
             $ids = explode(',', $request->detail_transaction_ids);
 
             DetailTransaction::whereIn('id', $ids)->update([
                 'transaction_id' => $transaction->id
             ]);
-        }
-        // Mode beli langsung
-        else if ($request->filled('product_id')) {
+        } else if ($request->filled('product_id')) {
             $product = Product::findOrFail($request->product_id);
 
             DetailTransaction::create([

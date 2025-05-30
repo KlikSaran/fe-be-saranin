@@ -62,7 +62,7 @@ class ProductController extends Controller
             ->where('id', '!=', $id)
             ->take(20)
             ->get();
-        $categories = Product::where('category', "!=", null)->limit(5)->get();
+        $categories = Product::select('category')->distinct()->get();
 
         return view('public.product.detail', compact('productDetail', 'productSimilar', 'categories'));
     }

@@ -14,22 +14,15 @@ class BasketController extends Controller
      */
     public function index()
     {
-        // Ambil 5 kategori unik
-        $categories = Product::whereNotNull('category')
-            ->select('category')
-            ->distinct()
-            ->limit(5)
-            ->get();
+        $categories = Product::select('category')->distinct()->get();
 
-        // Ambil 5 item di keranjang + relasi produk
         $getBasket = DetailTransaction::with('product')
             ->latest()
             ->limit(5)
             ->get();
 
-        // ID, quantity, dan subtotal masing-masing
         $basketIds = $getBasket->pluck('id')->implode(',');
-        $basketQuantities = $getBasket->pluck('quantity', 'id')->toArray(); // [id => quantity]
+        $basketQuantities = $getBasket->pluck('quantity', 'id')->toArray(); 
         $basketSubtotals = [];
 
         foreach ($getBasket as $item) {

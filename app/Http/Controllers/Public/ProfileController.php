@@ -13,8 +13,8 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $categories = Product::where('category', "!=", null)->limit(5)->get();
-        
+        $categories = Product::select('category')->distinct()->get();
+
         return view('public.profile.index', compact('categories'));
     }
 

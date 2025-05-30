@@ -16,11 +16,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $categories = Product::whereNotNull('category')
-            ->select('category')
-            ->distinct()
-            ->limit(5)
-            ->get();
+        $categories = Product::select('category')->distinct()->get();
 
         $transactions = DetailTransaction::with('product', 'transaction.user')
             ->whereHas('transaction', function ($query) {

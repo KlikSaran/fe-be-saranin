@@ -10,9 +10,12 @@
             @forelse($transactions as $detail)
                 <div class="transaction-card">
                     <div class="transaction-header">
-                        <h3>{{ $detail->product->name ?? 'Produk tidak ditemukan' }}</h3>
-                        <span class="status-label {{ $detail->transaction->status ?? 'unknown' }}">
-                            {{ ucfirst($detail->transaction->status ?? 'Tidak diketahui') }}
+                        <div class="transaction-title">
+                            <h3>{{ $detail->product->name ?? 'Produk tidak ditemukan' }}</h3>
+                            <h5>{{ \Carbon\Carbon::parse($detail->created_at)->translatedFormat('d F Y') }}</h5>
+                        </div>
+                        <span class="status-label {{ $detail->transaction->status ?? 'success' }}">
+                            {{ ucfirst($detail->transaction->status ?? 'Selesai') }}
                         </span>
                     </div>
                     <p>Harga Satuan: Rp {{ number_format($detail->product->price ?? 0, 0, ',', '.') }}</p>
@@ -117,4 +120,17 @@
             background-color: red;
         }
     </style> --}}
+
+    <script>
+        @if(session('checkoutSuccessAlert'))
+            Swal.fire({
+                title: "Success!",
+                text: "{{ session('checkoutSuccessAlert') }}",
+                icon: "success",
+                showConfirmButton: true,
+                confirmButtonText: 'OK',
+                timer: 3000
+            });
+        @endif
+    </script>
 @endsection

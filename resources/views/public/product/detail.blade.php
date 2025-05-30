@@ -11,34 +11,14 @@
         </div>
 
         <!-- Kolom Detail Produk -->
-        <div class="product-details">
-            <h1 class="product-title">{{ $productDetail->name }}</h1>
-            <div class="product-price">{{ $productDetail->price }}</div>
+        <div class="product-details" data-id="{{ $productDetail->id }}" data-price="{{ $productDetail->price }}"
+            data-stock="{{ $productDetail->stock }}">
 
-            {{-- <h3 class="section-title">Menu Varian :</h3>
-            <ul class="variants-list">
-                <li class="variant-item">
-                    <input type="checkbox" id="variant1">
-                    <label for="variant1">Nama Varian</label>
-                </li>
-                <li class="variant-item">
-                    <input type="checkbox" id="variant2" checked>
-                    <label for="variant2">Nama Varian</label>
-                </li>
-                <li class="variant-item">
-                    <input type="checkbox" id="variant3" checked>
-                    <label for="variant3">Nama Varian</label>
-                </li>
-                <li class="variant-item">
-                    <input type="checkbox" id="variant4" checked>
-                    <label for="variant4">Nama Varian</label>
-                </li>
-            </ul> --}}
+            <h1 class="product-title">{{ $productDetail->name }}</h1>
+            <div class="product-price">Rp {{ number_format($productDetail->price, 0, ',', '.') }}</div>
 
             <h3 class="section-title">Deskripsi:</h3>
-            <p class="product-description">
-                {{$productDetail->description}}
-            </p>
+            <p class="product-description">{{ $productDetail->description }}</p>
         </div>
 
         <!-- Kolom Pemesanan -->
@@ -55,7 +35,7 @@
                 {{-- Kontrol Kuantitas --}}
                 <div class="quantity-control">
                     <div class="quantity-btn minus">-</div>
-                    <input type="number" name="quantity" class="quantity-input" value="1" min="1"
+                    <input type="number" name="quantity" class="quantity-input" id="quantityInput" value="1" min="1"
                         data-price="{{ $productDetail->price }}" readonly>
                     <div class="quantity-btn plus">+</div>
                 </div>
@@ -71,6 +51,15 @@
                     <button type="submit" class="btn btn-cart">+ Keranjang</button>
                 </div>
             </form>
+
+            <form action="{{ route('checkout.preview') }}" method="get">
+                <input type="hidden" name="product_id" id="productIdInput">
+                <input type="hidden" name="quantity" id="transQuantity">
+                <input type="hidden" name="subtotals" id="transSubtotals">
+                <input type="hidden" name="total_price" id="totalPriceInput">
+                <button type="submit" class="pay-btn" id="payButton">Beli Langsung</button>
+            </form>
+
 
 
         </div>
@@ -185,19 +174,27 @@
             updateSubtotal();
             updateButtonState();
         });
-
-
-        @if(session('productSuccessAlert'))
-            Swal.fire({
-                title: "Success!",
-                text: "{{ session('productSuccessAlert') }}",
-                icon: "success",
-                showConfirmButton: true,
-                confirmButtonText: 'OK',
-                timer: 3000
-            });
-        @endif
-
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const payButton = document.getElementById('payButton');
+            const quantityInput = document.getElementById('quantityInput');
+
+            payButton.addEventListener('click', (e) => {
+                const productDetail = document.querySelector('.product-details');
+                const id = productDetail.dataset.id;
+                const price = parseInt(productDetail.dataset.price);
+                const quantity = parseInt(quantityInput.value);
+
+                const subtotal = price * quantity;
+
+                document.getElementById('productIdInput').value = id;
+                document.getElementById('transQuantity').value = quantity;
+                document.getElementById('transSubtotals').value = subtotal;
+                document.getElementById('totalPriceInput').value = subtotal;
+            });
+        });
+
+    </script>
 @endsection

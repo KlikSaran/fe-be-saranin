@@ -46,7 +46,7 @@ class ProductController extends Controller
             'total_price' => $request->total_price
         ]);
 
-        return redirect()->back()->with('productSuccessAlert', 'Produk berhasil ditambahkan ke keranjang.');
+        return redirect()->route('baskets-public.index')->with('productSuccessAlert', 'Produk berhasil ditambahkan ke keranjang.');
     }
 
 

@@ -29,22 +29,17 @@
             <p>Rp {{ number_format($total, 0, ',', '.') }}</p>
             <form action="{{ route('checkout.submit') }}" method="post">
                 @csrf
+                <input type="hidden" name="product_id" value="{{ $item->product->id }}">
+                <input type="hidden" name="quantity" value="{{ $item->quantity }}">
+                <input type="hidden" name="price" value="{{ $item->product->price }}">
+                <input type="hidden" name="total_price" value="{{ $item->total_price }}">
+                {{-- <input type="text" name="detail_transaction_ids" value="{{ implode(',', $detailIds) }}"> --}}
+
                 <input type="hidden" name="detail_transaction_ids" value="{{ $items->pluck('id')->implode(',') }}">
+
                 <button type="submit" class="btn-submit">Bayar Sekarang</button>
             </form>
 
         </div>
     </div>
-    <script>
-        @if(session('checkoutSuccessAlert'))
-            Swal.fire({
-                title: "Success!",
-                text: "{{ session('checkoutSuccessAlert') }}",
-                icon: "success",
-                showConfirmButton: true,
-                confirmButtonText: 'OK',
-                timer: 3000
-            });
-        @endif
-    </script>
 @endsection

@@ -206,6 +206,17 @@
 
             updateSummary();
         });
+
+        @if(session('productSuccessAlert'))
+            Swal.fire({
+                title: "Success!",
+                text: "{{ session('productSuccessAlert') }}",
+                icon: "success",
+                showConfirmButton: true,
+                confirmButtonText: 'OK',
+                timer: 3000
+            });
+        @endif
     </script>
 
 @endsection

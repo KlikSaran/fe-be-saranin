@@ -58,14 +58,18 @@
                         <div class="product-content-wrapper">
                             <h3 class="product-title">{{ $product->name }}</h3>
                             <p class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
-                            <p class="product-description">{{ $product->description ?? '-' }}</p>
+                            @if($product->stock == 'True' || $product->stock === true || $product->stock == 1)
+                                <span class="badge bg-success text-white">Tersedia</span>
+                            @else
+                                <span class="badge bg-danger text-white">Tidak Tersedia</span>
+                            @endif
                         </div>
                     </a>
                 @endforeach
             </div>
         </div>
     </div>
-    
+
     <div class="pagination-container">
         {{ $products->links('components.custom-pagination') }}
     </div>

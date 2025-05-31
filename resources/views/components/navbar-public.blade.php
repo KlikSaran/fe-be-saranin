@@ -16,7 +16,7 @@
         <a href="{{ url('/') }}" class="nav-brand">Saranin.Id</a>
 
         <button class="kategori-btn" id="navbarKategoriBtn">
-            <i class="fas fa-bars"></i> <span>Kategori</span>
+            <i class="fas fa-bars"></i><span>Kategori</span>
         </button>
 
         <div class="kategori-dropdown" id="navbarKategoriDropdown">
@@ -25,8 +25,7 @@
                     @foreach ($categories as $category)
                         {{-- <input type="hidden" name="selected_categories" id="selectedCategoriesInput"> --}}
                         <a href="#" class="kategori-card" data-category="{{ $category['category'] }}">
-                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" loading="lazy"
-                                class="w-full h-48 object-cover">
+                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->category }}">
                             <span>{{ $category['category'] }}</span>
                         </a>
                     @endforeach

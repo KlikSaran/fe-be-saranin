@@ -13,7 +13,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $categories = Product::select('category')->distinct()->get();
+        $categories = Product::select('category', 'image')->get()->unique('category');
 
         return view('public.profile.index', compact('categories'));
     }

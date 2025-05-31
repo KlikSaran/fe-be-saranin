@@ -14,15 +14,15 @@ class BasketController extends Controller
      */
     public function index()
     {
-        $categories = Product::select('category')->distinct()->get();
+        $categories = Product::select('category', 'image')->get()->unique('category');
 
         $getBasket = DetailTransaction::with('product')
             ->latest()
-            ->limit(5)
+            ->limit(10)
             ->get();
 
         $basketIds = $getBasket->pluck('id')->implode(',');
-        $basketQuantities = $getBasket->pluck('quantity', 'id')->toArray(); 
+        $basketQuantities = $getBasket->pluck('quantity', 'id')->toArray();
         $basketSubtotals = [];
 
         foreach ($getBasket as $item) {

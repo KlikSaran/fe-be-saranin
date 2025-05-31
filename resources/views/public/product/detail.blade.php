@@ -75,6 +75,11 @@
                     <h4>{{ $similar->name }}</h4>
                     <p>{{ $similar->description }}</p>
                     <div class="recommendation-price">Rp{{ number_format($similar->price, 0, ',', '.') }}</div>
+                    @if($similar->stock == 'True' || $similar->stock === true || $similar->stock == 1)
+                        <span class="badge bg-success text-white">Tersedia</span>
+                    @else
+                        <span class="badge bg-danger text-white">Tidak Tersedia</span>
+                    @endif
                 </a>
             @endforeach
         </div>

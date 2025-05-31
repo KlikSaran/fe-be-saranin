@@ -13,7 +13,7 @@ class CheckoutController extends Controller
 {
     public function preview(Request $request)
     {
-        $categories = Product::select('category')->distinct()->get();
+        $categories = Product::select('category', 'image')->get()->unique('category');
 
         $productIds = explode(',', $request->product_id);
         $detailIds = explode(',', $request->detail_transaction_id);

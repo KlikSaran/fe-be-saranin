@@ -56,7 +56,6 @@
                                                 harga --}}
                                                 <td>
                                                     @if($product->stock == 'True' || $product->stock === true || $product->stock == 1)
-                                                        {{-- Perbaikan kondisi stok --}}
                                                         <span class="badge bg-success text-white">Tersedia</span>
                                                     @else
                                                         <span class="badge bg-danger text-white">Tidak Tersedia</span>

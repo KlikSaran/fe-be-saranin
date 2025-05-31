@@ -25,7 +25,7 @@ class ProductController extends Controller
     public function create()
     {
         // $categories = Product::select('category')->distinct()->get();
-        
+
         // return view('public.product.search', compact('categories'));
     }
 
@@ -64,7 +64,7 @@ class ProductController extends Controller
             ->where('id', '!=', $id)
             ->take(20)
             ->get();
-        $categories = Product::select('category')->distinct()->get();
+        $categories = Product::select('category', 'image')->get()->unique('category');
 
         return view('public.product.detail', compact('productDetail', 'productSimilar', 'categories'));
     }

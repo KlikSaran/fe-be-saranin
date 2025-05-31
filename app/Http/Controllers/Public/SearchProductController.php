@@ -81,7 +81,7 @@ class SearchProductController extends Controller
         $displayedCategoryName = $categoryInput ?: 'Semua Kategori';
 
         $allUniqueCategories = Product::select('category')->distinct()->orderBy('category')->get();
-        $categories = Product::select('category')->distinct()->get();
+        $categories = Product::select('category', 'image')->get()->unique('category');
 
         return view('public.product.search', [
             'products' => $products,

@@ -92,17 +92,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    if (btnSearch) {
-        btnSearch.addEventListener("click", handleSearch);
-    }
-    if (inputSearch) {
-        inputSearch.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") {
-                e.preventDefault();
-                handleSearch();
-            }
-        });
-    }
+    // if (btnSearch) {
+    //     btnSearch.addEventListener("click", handleSearch);
+    // }
+    // if (inputSearch) {
+    //     inputSearch.addEventListener("keypress", (e) => {
+    //         if (e.key === "Enter") {
+    //             e.preventDefault();
+    //             handleSearch();
+    //         }
+    //     });
+    // }
 
     if (profileBtn && profileDropdown) {
         profileBtn.addEventListener("click", (e) => {

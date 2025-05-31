@@ -1,23 +1,3 @@
-{{-- resources/views/components/navbar.blade.php --}}
-{{--
-This Blade component assumes you pass a $categories array from your controller.
-Example in controller:
-$categories = [
-[
-'name' => 'Komputer & Aksesoris',
-'icon' => 'https://cdn-icons-png.flaticon.com/512/2203/2203270.png',
-'slug' => 'komputer-aksesoris' // Optional: for cleaner URLs
-],
-// ... other categories
-];
-return view('your-page', compact('categories'));
-
-Then in your main Blade file, you can include it like:
-<x-navbar :categories="$categories" />
-or
-@include('components.navbar', ['categories' => $categories])
---}}
-
 @props(['categories' => []])
 
 <head>
@@ -45,8 +25,8 @@ or
                     @foreach ($categories as $category)
                         {{-- <input type="hidden" name="selected_categories" id="selectedCategoriesInput"> --}}
                         <a href="#" class="kategori-card" data-category="{{ $category['category'] }}">
-                            <img src="{{ $category['icon'] }}" alt="{{ $category['category'] }}"
-                                onerror="this.src='https://placehold.co/50x50/EFEFEF/A9A9A9?text=Icon'; this.onerror=null;">
+                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}" loading="lazy"
+                                class="w-full h-48 object-cover">
                             <span>{{ $category['category'] }}</span>
                         </a>
                     @endforeach
@@ -56,10 +36,13 @@ or
             </div>
         </div>
 
-        <div class="container-search">
-            <input type="text" id="navbarInputSearch" placeholder="Cari produk...">
-            <button id="navbarBtnSearch"><i class="fas fa-search"></i></button>
-        </div>
+        <form action="{{ route('search.consumer.product') }}" method="get" class="container-search" id="searchForm">
+            {{-- @csrf tidak diperlukan untuk method="get" --}}
+            <input type="text" id="navbarInputSearch" placeholder="Cari nama produk..." name="query" aria-label="Search"
+                aria-describedby="search-addon" value="{{ request('query') ?? '' }}" onkeyup="handleSearchInput()"
+                autofocus>
+            <button type="submit" id="navbarBtnSearch"><i class="fas fa-search"></i></button>
+        </form>
 
         <div class="nav-icons">
             <a href="{{ route('baskets-public.index') }}" class="nav-icon" id="navbarKeranjangBtn">
@@ -105,3 +88,49 @@ or
     </nav>
 </div>
 
+<script>
+    let searchTimeout;
+    const searchForm = document.getElementById('searchForm');
+    const searchInput = document.getElementById('navbarInputSearch');
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('navbarInputSearch');
+        const searchForm = document.getElementById('searchForm');
+
+        if (searchInput && searchForm) {
+            searchInput.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter' || event.keyCode === 13) {
+                    event.preventDefault();
+
+                    searchForm.submit();
+                }
+            });
+        }
+    });
+
+    function handleSearchInput() {
+        clearTimeout(searchTimeout);
+
+        searchTimeout = setTimeout(() => {
+            if (searchInput.value === '') {
+                searchForm.submit();
+            }
+        }, 500);
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const kategoriCards = document.querySelectorAll('.kategori-card');
+
+        kategoriCards.forEach(function (card) {
+            card.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const category = this.getAttribute('data-category');
+
+                const searchUrl = `{{ route('search.consumer.product') }}?category=${encodeURIComponent(category)}`;
+                window.location.href = searchUrl;
+            });
+        });
+    });
+
+</script>

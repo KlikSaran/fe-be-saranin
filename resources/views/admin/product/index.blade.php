@@ -35,6 +35,7 @@
                                         <th scope="col">No.</th>
                                         <th scope="col">Nama</th>
                                         <th scope="col">Kategori</th>
+                                        {{-- <th scope="col">Deskripsi</th> --}}
                                         <th scope="col">Harga</th>
                                         <th scope="col">Stok</th>
                                         <th scope="col">Foto</th>
@@ -50,6 +51,7 @@
                                                 </th>
                                                 <td>{{ $product->name }}</td>
                                                 <td>{{ $product->category }}</td>
+                                                {{-- <td>{{ $product->description }}</td> --}}
                                                 <td>Rp {{ number_format($product->price, 0, ',', '.') }}</td> {{-- Formatting
                                                 harga --}}
                                                 <td>
@@ -63,7 +65,7 @@
                                                 <td>
                                                     @if($product->image)
                                                         <img src="{{ asset('storage/' . $product->image) }}"
-                                                            alt="{{ $product->name }}" width="80px" style="border-radius: 4px;">
+                                                            alt="{{ $product->name }}" width="80px">
                                                     @else
                                                         <span>Tidak ada gambar</span>
                                                     @endif
@@ -75,16 +77,15 @@
                                                         data-category="{{ $product->category }}"
                                                         data-price="{{ $product->price }}" data-stock="{{ $product->stock }}"
                                                         data-description="{{ $product->description }}"
-                                                        data-image="{{ $product->image }}" {{-- Tambahkan data lain yang
-                                                        dibutuhkan untuk form edit --}} data-bs-toggle="modal"
-                                                        data-bs-target="#editProductModal">
+                                                        data-image="{{ $product->image }}">
                                                         <i class="fas fa-edit"></i> Edit
                                                     </button>
-                                                    <form id="deleteForm" action="{{ route('products.destroy', $product->id) }}"
-                                                        method="POST" class="ms-2">
+                                                    <form id="deleteForm-{{ $product->id }}"
+                                                        action="{{ route('products.destroy', $product->id) }}" method="POST"
+                                                        class="ms-2 d-inline">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="button" class="btn btn-danger btn-sm" id="delete-btn"
+                                                        <button type="button" class="btn btn-danger btn-sm delete-btn"
                                                             data-id="{{ $product->id }}">Hapus</button>
                                                     </form>
                                                 </td>
@@ -101,52 +102,65 @@
                                     {{ $products->links('components.custom-pagination') }}
                                 </div>
 
-                                <div class="modal fade" id="editProductModal" tabindex="-1"
-                                    aria-labelledby="editProductModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="editProductModal" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-md">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editProductModalLabel">Edit Produk: <span
-                                                        id="editProductName"></span></h5>
+                                                <h5 class="modal-title">Edit Produk</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
-                                            <form id="editProductForm" method="POST" action=""> {{-- Action akan diisi oleh
-                                                JS --}}
+                                            <form id="editProductForm" action="{{ route('products.update', ':id') }}"
+                                                method="POST" enctype="multipart/form-data">
                                                 @csrf
-                                                @method('PUT') {{-- Atau PATCH --}}
+                                                @method('PUT')
                                                 <div class="modal-body">
-                                                    <input type="hidden" id="editProductId" name="product_id">
+                                                    <input type="hidden" id="edit_modal_id" name="product_id">
 
                                                     <div class="mb-3">
                                                         <label for="edit_name" class="form-label">Nama Produk</label>
                                                         <input type="text" class="form-control" id="edit_name" name="name"
-                                                            required>
+                                                            required value={{ $product->name }}>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="edit_category" class="form-label">Kategori</label>
                                                         <input type="text" class="form-control" id="edit_category"
-                                                            name="category" required>
+                                                            name="category" value={{ $product->category }} required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="edit_price" class="form-label">Harga</label>
                                                         <input type="number" class="form-control" id="edit_price"
-                                                            name="price" required>
+                                                            name="price" value={{ $product->price }} required>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="edit_stock" class="form-label">Status Stok</label>
-                                                        <select class="form-select" id="edit_stock" name="stock">
+                                                        <select class="form-select" id="edit_stock" name="stock" value={{ $product->stock }}>
                                                             <option value="True">Tersedia</option>
                                                             <option value="False">Tidak Tersedia</option>
                                                         </select>
                                                     </div>
-                                                    {{-- Tambahkan field lain sesuai kebutuhan --}}
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Batal</button>
-                                                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                                </div>
+                                                    <div class="mb-3">
+                                                        <label for="edit_description" class="form-label">Deskripsi</label>
+                                                        <textarea class="form-control" id="edit_description"
+                                                            name="description"
+                                                            rows="3">{{ $product->description }}</textarea>
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label for="image" class="form-label">Foto Produk</label>
+                                                        <img id="preview-image"
+                                                            src="{{ asset('storage/' . $product->image) }}"
+                                                            alt="Product Image" width="150px" class="d-block mb-2">
+                                                        <input type="file" name="image" id="image" accept="image/*"
+                                                            class="form-control">
+                                                        <small class="text-muted">Unggah gambar baru jika ingin mengubah
+                                                            foto produk.</small>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Batal</button>
+                                                        <button type="submit" class="btn btn-primary">Simpan
+                                                            Perubahan</button>
+                                                    </div>
                                             </form>
                                         </div>
                                     </div>
@@ -162,73 +176,36 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // --- Untuk Modal Edit Produk ---
-            var editProductModal = document.getElementById('editProductModal');
-            if (editProductModal) {
-                editProductModal.addEventListener('show.bs.modal', function (event) {
-                    // Tombol yang memicu modal
-                    var button = event.relatedTarget;
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".edit-button").forEach(button => {
+                button.addEventListener("click", function () {
+                    let productId = this.getAttribute("data-id");
+                    let name = this.getAttribute("data-name");
+                    let category = this.getAttribute("data-category");
+                    let price = this.getAttribute("data-price");
+                    let stock = this.getAttribute("data-stock");
+                    let description = this.getAttribute("data-description");
+                    let image = this.getAttribute("data-image");
 
-                    // Ekstrak info dari atribut data-*
-                    var productId = button.getAttribute('data-id');
-                    var productName = button.getAttribute('data-name');
-                    var productCategory = button.getAttribute('data-category'); // Pastikan ada data-category di tombol
-                    var productPrice = button.getAttribute('data-price');       // Pastikan ada data-price di tombol
-                    var productStock = button.getAttribute('data-stock');       // Pastikan ada data-stock di tombol
-                    var productDescription = button.getAttribute('data-description');       // Pastikan ada data-stock di tombol
+                    document.getElementById("edit_modal_id").value = productId;
+                    document.getElementById("edit_name").value = name;
+                    document.getElementById("edit_category").value = category;
+                    document.getElementById("edit_price").value = price;
+                    document.getElementById("edit_stock").value = stock;
+                    document.getElementById("edit_description").value = description;
 
-                    // Update konten modal
-                    var modalTitle = editProductModal.querySelector('.modal-title #editProductName');
-                    var modalForm = editProductModal.querySelector('#editProductForm');
-                    var inputId = editProductModal.querySelector('#editProductId');
-                    var inputName = editProductModal.querySelector('#edit_name');
-                    var inputCategory = editProductModal.querySelector('#edit_category');
-                    var inputPrice = editProductModal.querySelector('#edit_price');
-                    var inputStock = editProductModal.querySelector('#edit_stock');
-                    var inputDescription = editProductModal.querySelector('#edit_description');
-
-                    if (modalTitle) modalTitle.textContent = productName;
-                    if (modalForm) modalForm.action = 'products/' + productId 
-                    if (inputId) inputId.value = productId;
-                    if (inputName) inputName.value = productName;
-                    if (inputCategory) inputCategory.value = productCategory;
-                    if (inputPrice) inputPrice.value = productPrice;
-                    if (inputDescription) inputDescription.value = productDescription;
-
-                    if (inputStock) {
-                        var stockStatus = button.getAttribute('data-stock');
-                        inputStock.value = (stockStatus === 'True' || stockStatus === true || stockStatus === '1') ? 'True' : 'False';
+                    if (image) {
+                        document.getElementById("preview-image").src = "/storage/" + image;
                     }
-                });
-            }
 
+                    document.getElementById("editProductForm").setAttribute("action", "/products/" + productId);
+
+                    let editModal = new bootstrap.Modal(document.getElementById("editProductModal"));
+                    editModal.show();
+                });
+            });
         });
 
-        // Confirmation delete message
-        // document.addEventListener("DOMContentLoaded", function () {
-        //     document.querySelectorAll("#delete-btn").forEach(button => {
-        //         button.addEventListener("click", function () {
-        //             let studyId = this.getAttribute("data-id");
-        //             let form = this.closest("form");
-
-        //             Swal.fire({
-        //                 title: "Apakah kamu yakin?",
-        //                 text: "Bidang Studi ini akan dihapus secara permanen!",
-        //                 icon: "warning",
-        //                 showCancelButton: true,
-        //                 confirmButtonColor: "#d33",
-        //                 cancelButtonColor: "#3085d6",
-        //                 confirmButtonText: "Ya, hapus!",
-        //                 cancelButtonText: "Batal"
-        //             }).then((result) => {
-        //                 if (result.isConfirmed) {
-        //                     form.submit();
-        //                 }
-        //             });
-        //         });
-        //     });
-        // });
 
         let searchTimeout;
         const searchForm = document.getElementById('searchForm');
@@ -261,6 +238,39 @@
                 confirmButtonText: 'OK',
                 timer: 3000
             });
+        @elseif(session('productDeleteSuccessAlert'))
+            Swal.fire({
+                title: "Deleted!",
+                text: "{{ session('productDeleteSuccessAlert') }}",
+                icon: "success",
+                showConfirmButton: true,
+                confirmButtonText: 'OK',
+                timer: 3000
+            });
         @endif
+        // Konfirmasi penghapusan produk
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const productId = this.dataset.id;
+                    Swal.fire({
+                        title: 'Yakin ingin menghapus?',
+                        text: "Data tidak dapat dikembalikan setelah dihapus!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById(`deleteForm-${productId}`).submit();
+                        }
+                    });
+                });
+            });
+        });
     </script>
 @endsection

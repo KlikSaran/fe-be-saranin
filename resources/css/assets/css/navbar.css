@@ -18,7 +18,9 @@ nav {
     padding: 15px 5%;
     background-color: white;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: relative;
+    position: sticky; /* Ganti dari relative */
+    top: 0; /* Menempelkannya di bagian atas */
+    z-index: 1000; /* Agar berada di atas elemen lain */
 }
 
 nav h2 {
@@ -88,6 +90,13 @@ nav h2 {
     transition: background-color 0.2s ease;
     text-decoration: none;
     color: inherit;
+}
+
+.kategori-card:hover {
+    background: radial-gradient(circle at 10% 20%, #3734a9 0%, #ffffff 50%);
+    transform: translateY(-5px);
+    border-radius: 12px;
+    cursor: pointer;
 }
 
 .kategori-card img {

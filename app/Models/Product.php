@@ -14,8 +14,8 @@ class Product extends Model
         'category',
         'price',
         'stock',
+        'description',
         'image',
-        'description'
     ];
 
     public function detailTransactions()

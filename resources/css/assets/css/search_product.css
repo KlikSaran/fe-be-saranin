@@ -1,0 +1,172 @@
+/* Wrapper utama */
+.search-products-wrapper {
+    padding: 40px 35px;
+    margin-top: 10px;
+}
+
+/* Header */
+.search-header {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.search-title {
+    font-size: 16px;
+    margin-left: 0px;
+}
+
+.search-subtitle {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Kontainer pencarian dan filter */
+.search-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Filter */
+.filters {
+    width: 20%;
+    height: fit-content;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+}
+
+.filters hr {
+    margin: 0 auto;
+    width: 92.5%;
+    border: 1px solid #f5f5f5;
+    border-radius: 8px;
+}
+
+.filter-section {
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.filter-title {
+    border-radius: 10px;
+    margin: 0;
+    padding: 10px 20px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #555;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.filter-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+}
+
+.filter-section.open .filter-content {
+    opacity: 1;
+    max-height: max-content;
+    padding: 10px;
+}
+.dropdown-arrow {
+    transition: transform 0.5s ease;
+}
+
+.filter-section.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+.dropdown-arrow svg {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+    display: block;
+    color: #555;
+    border-radius: 50%;
+}
+
+.dropdown-arrow svg:hover {
+    background: #f5f5f5;
+}
+
+.price-inputs input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.filter-option {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.filter-option input {
+    margin-right: 6px;
+}
+
+/* Kartu produk */
+.card-container {
+    display: grid;
+    flex: 1;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.product-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    border: none;
+}
+
+/* ============================== */
+/*           Responsif           */
+/* ============================== */
+
+@media (max-width: 1024px) {
+    .filters {
+        width: 25%;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-container {
+        flex-direction: column;
+    }
+
+    .filters {
+        width: 100%;
+    }
+
+    .card-container {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .search-products-wrapper {
+        padding: 20px 15px;
+    }
+
+    .search-title {
+        font-size: 20px;
+    }
+
+    .search-subtitle {
+        font-size: 14px;
+    }
+
+    .card-container {
+        grid-template-columns: 1fr;
+    }
+}

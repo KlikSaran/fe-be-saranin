@@ -117,24 +117,39 @@ class ProductController extends Controller
             'price' => 'required|string|min:0',
             'stock' => 'nullable|in:True,False',
             'description' => 'nullable|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ], [
             'name.required' => 'Product name is required.',
             'category.required' => 'Category is required.',
             'category.string' => 'Category must be a string.',
             'price.required' => 'Price is required.',
             'price.min' => 'Price cannot be negative.',
-            'descripton.string' => 'Description must be a string.',
+            'description.string' => 'Description must be a string.',
             'image.required' => 'Image is required.',
             'image.image' => 'The file must be an image.',
             'image.mimes' => 'Image must be a file of type: jpeg, png, jpg, gif, svg.',
             'image.max' => 'Image size must not exceed 2MB.',
         ]);
 
-        // $imagePath = $products->image;
-        // if ($request->hasFile('image')) {
-        //     $imagePath = $request->file('image')->store('images', 'public');
-        // }
+        $imagePath = $products->image;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+
+            $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension();
+
+            $cleanedOriginalName = Str::slug($originalFilename, '_');
+            $filenameToStore = $cleanedOriginalName . '.' . $extension;
+            $counter = 1;
+
+            while (Storage::disk('public')->exists('images/' . $filenameToStore)) {
+                $filenameToStore = $cleanedOriginalName . '_' . $counter . '.' . $extension;
+                $counter++;
+            }
+
+            $imagePath = $file->storeAs('images', $filenameToStore, 'public');
+        }
 
         $products->update([
             'name' => $request->name,
@@ -142,10 +157,8 @@ class ProductController extends Controller
             'price' => $request->price,
             'stock' => $request->stock,
             'description' => $request->description,
-            // 'image' => $imagePath,
+            'image' => $imagePath,
         ]);
-
-        session()->flash('productUpdateSuccessAlert', "Data produk berhasil diubah.");
 
         return redirect()->route('products.index')->with('productUpdateSuccessAlert', 'Data produk berhasil diubah.');
     }
@@ -153,10 +166,14 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        $product->delete();
+
+        return redirect()->route('products.index')->with('productDeleteSuccessAlert', 'Produk berhasil dihapus.');
     }
+
 
     public function search(Request $request)
     {

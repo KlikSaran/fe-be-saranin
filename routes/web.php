@@ -17,6 +17,7 @@ use App\Http\Controllers\Public\IndexController;
 use App\Http\Controllers\Public\ProductController;
 use App\Http\Controllers\Public\ProfileController;
 use App\Http\Controllers\Public\TransactionController;
+use App\Http\Controllers\Public\SearchProductController;
 
 // Public Routes
 Route::resource('/', HomeController::class);
@@ -29,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/products-public', ProductController::class);
     Route::get('/checkout/preview', [CheckoutController::class, 'preview'])->name('checkout.preview');
     Route::post('/checkout/submit', [CheckoutController::class, 'submit'])->name('checkout.submit');
+    Route::get('/products/{name}', [ProductController::class, 'showRecommendationProductDetail'])->name('products-recommendation-public.show');
 
 
     // Admin Routes
@@ -41,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/search/product', [AdminProductController::class, 'search'])->name('search.product');
     Route::get('/search/transaction', [AdminTransactionController::class, 'search'])->name('search.transaction');
     Route::get('/search/consumer', [AdminConsumerController::class, 'search'])->name('search.consumer');
+    Route::get('/search/consumer/product', [SearchProductController::class, 'search'])->name('search.consumer.product');
 
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });

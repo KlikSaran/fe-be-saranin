@@ -24,7 +24,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('public.product.search');
+        // $categories = Product::select('category')->distinct()->get();
+
+        // return view('public.product.search', compact('categories'));
     }
 
     /**
@@ -62,10 +64,26 @@ class ProductController extends Controller
             ->where('id', '!=', $id)
             ->take(20)
             ->get();
-        $categories = Product::where('category', "!=", null)->limit(5)->get();
+
+        $categories = Product::select('category', 'image')->get()->unique('category');
 
         return view('public.product.detail', compact('productDetail', 'productSimilar', 'categories'));
     }
+
+    public function showRecommendationProductDetail(string $name)
+    {
+        $productDetail = Product::where('name', $name)->firstOrFail();
+
+        $productSimilar = Product::where('category', $productDetail->category)
+            ->where('id', '!=', $productDetail->id)
+            ->take(20)
+            ->get();
+
+        $categories = Product::select('category', 'image')->get()->unique('category');
+
+        return view('public.product.detail', compact('productDetail', 'productSimilar', 'categories'));
+    }
+
 
     /**
      * Show the form for editing the specified resource.

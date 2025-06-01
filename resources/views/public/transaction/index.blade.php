@@ -21,13 +21,14 @@
                     <p>Harga Satuan: Rp {{ number_format($detail->product->price ?? 0, 0, ',', '.') }}</p>
                     <p>Jumlah: {{ $detail->quantity }}</p>
                     <p>Total Harga: {{ $detail->total_price }}</p>
-                    <hr>
                 </div>
             @empty
                 <p>Tidak ada transaksi ditemukan.</p>
             @endforelse
         </div>
-
+        <div class="pagination-container">
+            {{ $transactions->links('components.custom-pagination') }}
+        </div>
     </div>
 
     {{-- Inline Script for Filter --}}

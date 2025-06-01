@@ -11,12 +11,12 @@ id,name,category,price,stock,image
 10,Mie ABC Selera Pedas,Makanan Instan,3200,True,images/mie_abc_selera_pedas.jpg
 11,Koka Mie Goreng Singapura,Makanan Instan,8500,True,images/koka_mie_goreng_singapura.jpg
 12,Mie Burung Dara Ayam Bawang,Makanan Instan,2900,True,images/mie_burung_dara_ayam_bawang.jpg
-13,Mi Instan Sehat Alami FitMee Shirataki,Makanan Instan,12500,True,images/fitmee_shirataki.jpg
+13,Mi Instan Sehat Alami FitMee Shirataki,Makanan Instan,12500,True,images/mi_instan_sehat_alami_fitmee_shirataki.jpg
 14,Mi Samyang Spicy Chicken,Makanan Instan,15000,True,images/mi_samyang_spicy_chicken.jpg
 15,Mi BonCabe Level 15,Makanan Instan,6500,True,images/mi_boncabe_level_15.jpg
 16,Teh Botol Sosro,Minuman,5000,True,images/teh_botol_sosro.jpg
 17,Le Minerale 600ml,Minuman,4000,True,images/le_minerale_600ml.jpg
-18,Aqua 1.5L,Minuman,6500,True,images/aqua_1_5l.jpg
+18,Aqua 1.5L,Minuman,6500,True,images/aqua_1.5l.jpg
 19,Mizone Lychee Lemon,Minuman,7000,True,images/mizone_lychee_lemon.jpg
 20,Pocari Sweat 500ml,Minuman,8000,True,images/pocari_sweat_500ml.jpg
 21,You C1000 Orange,Minuman,10000,True,images/you_c1000_orange.jpg
@@ -38,12 +38,12 @@ id,name,category,price,stock,image
 37,Cimory Fresh Milk Chocolate,Produk Susu,9000,True,images/cimory_fresh_milk_chocolate.jpg
 38,Diamond Susu UHT Full Cream,Produk Susu,17500,True,images/diamond_susu_uht_full_cream.jpg
 39,Lactamil Pregnasis,Produk Susu,85000,True,images/lactamil_pregnasis.jpg
-40,SGM Eksplor 1+ Vanilla,Produk Susu,75000,True,images/sgm_eksplor_1_plus_vanilla.jpg
+40,SGM Eksplor 1+ Vanilla,Produk Susu,75000,True,images/sgm_eksplor_1+_vanilla.jpg
 41,Bebelac 3 Vanila,Produk Susu,95000,True,images/bebelac_3_vanila.jpg
 42,Anlene Gold 5X,Produk Susu,80000,True,images/anlene_gold_5x.jpg
-43,Enfagrow A+ 3 Vanilla,Produk Susu,185000,True,images/enfagrow_a_plus_3_vanilla.jpg
+43,Enfagrow A+ 3 Vanilla,Produk Susu,185000,True,images/enfagrow_a+_3_vanilla.jpg
 44,Susu Zee Platinum Choco Hazel,Produk Susu,65000,True,images/susu_zee_platinum_choco_hazel.jpg
-45,Vidoran Xmart 1+ Vanilla,Produk Susu,55000,True,images/vidoran_xmart_1_plus_vanilla.jpg
+45,Vidoran Xmart 1+ Vanilla,Produk Susu,55000,True,images/vidoran_xmart_1+_vanilla.jpg
 46,Kopi Kapal Api Special Mix,Kopi dan Teh,13500,True,images/kopi_kapal_api_special_mix.jpg
 47,Good Day Mocacinno,Kopi dan Teh,12500,True,images/good_day_mocacinno.jpg
 48,Nescafe Classic 100g,Kopi dan Teh,23000,True,images/nescafe_classic_100g.jpg
@@ -70,7 +70,7 @@ id,name,category,price,stock,image
 69,Oreo Vanilla,Makanan Ringan,7500,True,images/oreo_vanilla.jpg
 70,Nabati Cheese Wafer,Makanan Ringan,6500,True,images/nabati_cheese_wafer.jpg
 71,SilverQueen Chunky Bar,Makanan Ringan,23000,True,images/silverqueen_chunky_bar.jpg
-72,Beng-Beng Share It,Makanan Ringan,15000,True,images/beng_beng_share_it.jpg
+72,Beng-Beng Share It,Makanan Ringan,15000,True,images/beng-beng_share_it.jpg
 73,Pocky Chocolate,Makanan Ringan,10000,True,images/pocky_chocolate.jpg
 74,Good Time Cookies,Makanan Ringan,9500,True,images/good_time_cookies.jpg
 75,Dueto Wafer Chocolate,Makanan Ringan,7000,True,images/dueto_wafer_chocolate.jpg
@@ -119,7 +119,7 @@ id,name,category,price,stock,image
 118,Marina UV White Healthy dan Glow,Sabun dan Perawatan Tubuh,21000,True,images/marina_uv_white_healthy_dan_glow.jpg
 119,Citra Body Lotion Pearly White UV,Sabun dan Perawatan Tubuh,27000,True,images/citra_body_lotion_pearly_white_uv.jpg
 120,Herborist Lulur Tradisional Bali,Sabun dan Perawatan Tubuh,16500,True,images/herborist_lulur_tradisional_bali.jpg
-121,Shampoo Pantene Pro-V Hair Fall Control,Shampoo dan Perawatan Rambut,27500,True,images/shampoo_pantene_pro_v_hair_fall_control.jpg
+121,Shampoo Pantene Pro-V Hair Fall Control,Shampoo dan Perawatan Rambut,27500,True,images/shampoo_pantene_pro-v_hair_fall_control.jpg
 122,Shampoo Sunsilk Hijab Recharge,Shampoo dan Perawatan Rambut,25000,True,images/shampoo_sunsilk_hijab_recharge.jpg
 123,Shampoo Dove Total Hair Fall Treatment,Shampoo dan Perawatan Rambut,28500,True,images/shampoo_dove_total_hair_fall_treatment.jpg
 124,Shampoo Head dan Shoulders Clean dan Balanced,Shampoo dan Perawatan Rambut,37500,True,images/shampoo_head_dan_shoulders_clean_dan_balanced.jpg
@@ -131,7 +131,7 @@ id,name,category,price,stock,image
 130,Ellips Hair Vitamin Pink,Shampoo dan Perawatan Rambut,12500,True,images/ellips_hair_vitamin_pink.jpg
 131,Natur Shampoo Aloe Vera,Shampoo dan Perawatan Rambut,21500,True,images/natur_shampoo_aloe_vera.jpg
 132,Emeron Shampoo Soft dan Smooth,Shampoo dan Perawatan Rambut,16500,True,images/emeron_shampoo_soft_dan_smooth.jpg
-133,L'Oreal Paris Elseve Total Repair 5,Shampoo dan Perawatan Rambut,53500,True,images/loreal_paris_elseve_total_repair_5.jpg
+133,L'Oreal Paris Elseve Total Repair 5,Shampoo dan Perawatan Rambut,53500,True,images/l'oreal_paris_elseve_total_repair_5.jpg
 134,Wardah Hairfall Treatment Shampoo,Shampoo dan Perawatan Rambut,27500,True,images/wardah_hairfall_treatment_shampoo.jpg
 135,Mylea Intensive Hair Care Shampoo,Shampoo dan Perawatan Rambut,34500,True,images/mylea_intensive_hair_care_shampoo.jpg
 136,Pepsodent Whitening,Pasta Gigi dan Mouthwash,13500,True,images/pepsodent_whitening.jpg
@@ -155,7 +155,7 @@ id,name,category,price,stock,image
 154,Pampers Premium Care,Produk Bayi,105000,True,images/pampers_premium_care.jpg
 155,Nepia Genki Pants,Produk Bayi,82000,True,images/nepia_genki_pants.jpg
 156,Sensi Dry Pants,Produk Bayi,65000,True,images/sensi_dry_pants.jpg
-157,Johnson's Baby Powder Blossoms,Produk Bayi,25000,True,images/johnsons_baby_powder_blossoms.jpg
+157,Johnson's Baby Powder Blossoms,Produk Bayi,25000,True,images/johnson's_baby_powder_blossoms.jpg
 158,Zwitsal Baby Bath Hair dan Body,Produk Bayi,32500,True,images/zwitsal_baby_bath_hair_dan_body.jpg
 159,Cussons Baby Powder Fresh dan Nourish,Produk Bayi,23500,True,images/cussons_baby_powder_fresh_dan_nourish.jpg
 160,Bambi Baby Lotion,Produk Bayi,18500,True,images/bambi_baby_lotion.jpg
@@ -174,7 +174,7 @@ id,name,category,price,stock,image
 173,Antangin JRG,Produk Kesehatan,6500,True,images/antangin_jrg.jpg
 174,Tolak Angin Cair,Produk Kesehatan,7500,True,images/tolak_angin_cair.jpg
 175,Promag Tablet,Produk Kesehatan,8500,True,images/promag_tablet.jpg
-176,Enervon-C Tablet,Produk Kesehatan,18500,True,images/enervon_c_tablet.jpg
+176,Enervon-C Tablet,Produk Kesehatan,18500,True,images/enervon-c_tablet.jpg
 177,Hemaviton Stamina Plus,Produk Kesehatan,17000,True,images/hemaviton_stamina_plus.jpg
 178,Imboost Force,Produk Kesehatan,29500,True,images/imboost_force.jpg
 179,Woods Peppermint Cough Syrup,Produk Kesehatan,21500,True,images/woods_peppermint_cough_syrup.jpg
@@ -188,11 +188,11 @@ id,name,category,price,stock,image
 187,Super Pell Pembersih Lantai Lemon,Alat Kebersihan Rumah,14000,True,images/super_pell_pembersih_lantai_lemon.jpg
 188,Vixal Pembersih Kamar Mandi,Alat Kebersihan Rumah,15500,True,images/vixal_pembersih_kamar_mandi.jpg
 189,SOS Pembersih Kaca,Alat Kebersihan Rumah,12500,True,images/sos_pembersih_kaca.jpg
-190,Mr. Muscle Pembersih Serbaguna,Alat Kebersihan Rumah,14500,True,images/mr_muscle_pembersih_serbaguna.jpg
+190,Mr. Muscle Pembersih Serbaguna,Alat Kebersihan Rumah,14500,True,images/mr._muscle_pembersih_serbaguna.jpg
 191,Sunlight Jeruk Nipis 100,Alat Kebersihan Rumah,10500,True,images/sunlight_jeruk_nipis_100.jpg
 192,Mama Lemon Jeruk Nipis,Alat Kebersihan Rumah,9500,True,images/mama_lemon_jeruk_nipis.jpg
 193,Daia Detergent Pink,Alat Kebersihan Rumah,19500,True,images/daia_detergent_pink.jpg
-194,S.O.S Pembersih Serbaguna Lemon,Alat Kebersihan Rumah,13500,True,images/s_o_s_pembersih_serbaguna_lemon.jpg
+194,S.O.S Pembersih Serbaguna Lemon,Alat Kebersihan Rumah,13500,True,images/s.o.s_pembersih_serbaguna_lemon.jpg
 195,Scotch Brite Spons Cuci Piring,Alat Kebersihan Rumah,7500,True,images/scotch_brite_spons_cuci_piring.jpg
 196,So Good Chicken Nugget Original,Makanan Beku (Frozen Food),45000,True,images/so_good_chicken_nugget_original.jpg
 197,Fiesta Chicken Nugget Stick,Makanan Beku (Frozen Food),38500,True,images/fiesta_chicken_nugget_stick.jpg
@@ -210,8 +210,8 @@ id,name,category,price,stock,image
 209,Fiesta Spicy Wing,Makanan Beku (Frozen Food),43500,True,images/fiesta_spicy_wing.jpg
 210,SunnyGold Chicken Wing,Makanan Beku (Frozen Food),45000,True,images/sunnygold_chicken_wing.jpg
 211,SilverQueen Cashew Milk Chocolate,Camilan Manis,25000,True,images/silverqueen_cashew_milk_chocolate.jpg
-212,Beng-Beng Mini,Camilan Manis,15500,True,images/beng_beng_mini.jpg
-213,Choki-Choki Stick,Camilan Manis,2500,True,images/choki_choki_stick.jpg
+212,Beng-Beng Mini,Camilan Manis,15500,True,images/beng-beng_mini.jpg
+213,Choki-Choki Stick,Camilan Manis,2500,True,images/choki-choki_stick.jpg
 214,Malkist Roma Cokelat,Camilan Manis,9500,True,images/malkist_roma_cokelat.jpg
 215,Tango Wafer Chocolate,Camilan Manis,12500,True,images/tango_wafer_chocolate.jpg
 216,Delfi Top,Camilan Manis,14500,True,images/delfi_top.jpg

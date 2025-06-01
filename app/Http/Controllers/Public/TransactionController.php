@@ -16,17 +16,13 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $categories = Product::whereNotNull('category')
-            ->select('category')
-            ->distinct()
-            ->limit(5)
-            ->get();
+        $categories = Product::select('category', 'image')->get()->unique('category');
 
         $transactions = DetailTransaction::with('product', 'transaction.user')
             ->whereHas('transaction', function ($query) {
                 $query->where('user_id', Auth::id());
             })->orderBy('created_at', 'desc')
-            ->get();
+            ->paginate(5);
 
         return view('public.transaction.index', compact('categories', 'transactions'));
     }

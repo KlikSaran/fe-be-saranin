@@ -70,11 +70,16 @@
         <h2 class="recommendation-title">Produk Serupa Lainnya</h2>
         <div class="recommendation-grid" id="similarProducts">
             @foreach ($productSimilar as $similar)
-                <a href="{{ route('products-public.show', $similar->id) }}" class="recommendation-card">
+                <a href="{{ route('products-public.show', $similar->id) }}" class="product-card">
                     <img src="{{ asset('storage/' . $similar->image) }}" alt="{{ $similar->name }}" loading="lazy">
                     <h4>{{ $similar->name }}</h4>
                     <p>{{ $similar->description }}</p>
                     <div class="recommendation-price">Rp{{ number_format($similar->price, 0, ',', '.') }}</div>
+                    @if($similar->stock == 'True' || $similar->stock === true || $similar->stock == 1)
+                        <span class="badge bg-success text-white">Tersedia</span>
+                    @else
+                        <span class="badge bg-danger text-white">Tidak Tersedia</span>
+                    @endif
                 </a>
             @endforeach
         </div>

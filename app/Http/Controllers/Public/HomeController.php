@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Public;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -15,7 +16,6 @@ class HomeController extends Controller
     {
         $products = Product::orderBy('created_at', 'desc')->paginate(20);
         $categories = Product::select('category', 'image')->get()->unique('category');
-
 
         return view('public.home.index', compact('products', 'categories'));
     }

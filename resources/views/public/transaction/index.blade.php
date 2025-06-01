@@ -26,10 +26,9 @@
                 <p>Tidak ada transaksi ditemukan.</p>
             @endforelse
         </div>
-
-    </div>
-    <div class="pagination-container">
-        {{ $transactions->links('components.custom-pagination') }}
+        <div class="pagination-container">
+            {{ $transactions->links('components.custom-pagination') }}
+        </div>
     </div>
 
     {{-- Inline Script for Filter --}}

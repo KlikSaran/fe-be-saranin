@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/products-public', ProductController::class);
     Route::get('/checkout/preview', [CheckoutController::class, 'preview'])->name('checkout.preview');
     Route::post('/checkout/submit', [CheckoutController::class, 'submit'])->name('checkout.submit');
+    Route::get('/products/{name}', [ProductController::class, 'showRecommendationProductDetail'])->name('products-recommendation-public.show');
 
 
     // Admin Routes

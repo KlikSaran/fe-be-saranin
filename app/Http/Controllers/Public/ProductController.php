@@ -64,10 +64,26 @@ class ProductController extends Controller
             ->where('id', '!=', $id)
             ->take(20)
             ->get();
+
         $categories = Product::select('category', 'image')->get()->unique('category');
 
         return view('public.product.detail', compact('productDetail', 'productSimilar', 'categories'));
     }
+
+    public function showRecommendationProductDetail(string $name)
+    {
+        $productDetail = Product::where('name', $name)->firstOrFail();
+
+        $productSimilar = Product::where('category', $productDetail->category)
+            ->where('id', '!=', $productDetail->id)
+            ->take(20)
+            ->get();
+
+        $categories = Product::select('category', 'image')->get()->unique('category');
+
+        return view('public.product.detail', compact('productDetail', 'productSimilar', 'categories'));
+    }
+
 
     /**
      * Show the form for editing the specified resource.

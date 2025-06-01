@@ -1,4 +1,5 @@
 @if ($paginator->hasPages())
+    {{-- Desktop Pagination --}}
     <ul class="pagination">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
@@ -43,4 +44,20 @@
             </li>
         @endif
     </ul>
+
+    {{-- Mobile Pagination --}}
+    <div class="pagination-mobile">
+        @if ($paginator->onFirstPage())
+            <span class="page-link-mobile disabled">Sebelumnya</span>
+        @else
+            <a href="{{ $paginator->previousPageUrl() }}" class="page-link-mobile">Sebelumnya</a>
+        @endif
+
+        @if ($paginator->hasMorePages())
+            <a href="{{ $paginator->nextPageUrl() }}" class="page-link-mobile">Berikutnya</a>
+        @else
+            <span class="page-link-mobile disabled">Berikutnya</span>
+        @endif
+    </div>
+
 @endif

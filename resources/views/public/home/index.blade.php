@@ -2,21 +2,28 @@
 @section('content')
     <x-navbar-public :categories="$categories"></x-navbar-public>
     <!-- REKOMENDASI -->
-    <section class="recommendation-section">
-        <h2>Rekomendasi untuk Anda</h2>
-        <div class="recommendation-slider-container">
-            <div class="recommendation-slider" id="recommendationSlider"></div>
+    <section class="recommendation-section" id="recommendation-section">
+        @auth
+            <h2>
+                Rekomendasi Produk buat {{ Auth::user()->fullname }}
+            </h2>
+        @endauth
+
+        <div class="recommendation-container">
+            <button id="prevBtn" class="slider-button">‹</button>
+
+            <div id="recommendationSlider">
+                <!-- Kartu rekomendasi akan di-render di sini -->
+            </div>
+
+            <button id="nextBtn" class="slider-button">›</button>
         </div>
-        <div class="slider-controls">
-            <button onclick="prevSlide()">
-                < <button onclick="nextSlide()">>
-            </button>
-        </div>
+
     </section>
 
     <!-- SEMUA PRODUK -->
     <section class="all-products-section">
-        <h2 class="text-3xl font-bold text-center mb-8 text-gray-800">Semua Produk</h2>
+        <h2>Semua Produk</h2>
         <div class="all-products">
             @foreach ($products as $product)
                 <a href="{{ route('products-public.show', $product->id) }}"
@@ -41,4 +48,74 @@
     <div class="pagination-container">
         {{ $products->links('components.custom-pagination') }}
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            @auth
+                fetchRecommendations({{ Auth::user()->id }});
+            @else
+                                                                                                                                                                                                                                            const recommendationSection = document.getElementById('recommendation-section');
+                if (recommendationSection) {
+                    recommendationSection.style.display = 'none'; // Sembunyikan jika tidak login
+                }
+            @endauth
+                                                                                                                });
+
+        function fetchRecommendations(userId) {
+            fetch("http://127.0.0.1:5000/predict", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id_user: userId,
+                    count_items: 20
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.recommendations && data.recommendations.length > 0) {
+                        const slider = document.getElementById('recommendationSlider');
+                        slider.innerHTML = '';
+
+                        data.recommendations.forEach(product => {
+                            const item = document.createElement('div');
+                            item.className = 'recommendation-item';
+                            item.innerHTML = `
+                                                                                    <a href="/products/${product.name}" class="recommendation-card-link">
+                                                                                        <div class="recommendation-card">
+                                                                                            <h3>${product.name}</h3>
+                                                                                            <p>${product.category}</p>
+                                                                                            <small>✨ ${product.trusted_score.toFixed(2)}</small>
+                                                                                        </div>
+                                                                                    </a>
+                                                                                `;
+                            slider.appendChild(item);
+                        });
+                    } else {
+                        document.getElementById('recommendationSlider').innerHTML = "<p>Tidak ada rekomendasi tersedia.</p>";
+                    }
+                })
+                .catch(error => {
+                    console.error("Error fetching recommendations:", error);
+                });
+        }
+    </script>
+
+    <script>
+        document.getElementById('prevBtn').addEventListener('click', function () {
+            document.getElementById('recommendationSlider').scrollBy({
+                left: -250,
+                behavior: 'smooth'
+            });
+        });
+
+        document.getElementById('nextBtn').addEventListener('click', function () {
+            document.getElementById('recommendationSlider').scrollBy({
+                left: 250,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+
+
 @endsection

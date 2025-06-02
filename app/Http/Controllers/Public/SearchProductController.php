@@ -65,6 +65,8 @@ class SearchProductController extends Controller
     {
         $query = $request->input('query');
         $categoryInput = $request->input('category');
+        $minimum_price = (float) $request->input('minimum_price');
+        $maksimum_price = (float) $request->input('maksimum_price');
 
         $productsQuery = Product::query();
 
@@ -76,7 +78,20 @@ class SearchProductController extends Controller
             $productsQuery->where('category', 'LIKE', "%{$categoryInput}%");
         }
 
-        $products = $productsQuery->orderBy('created_at', 'desc')->paginate(10)->appends($request->all());
+        if ($request->filled('minimum_price') && $minimum_price >= 0) {
+            $productsQuery->where('price', '>=', $minimum_price);
+        }
+
+        if ($request->filled('maksimum_price') && $maksimum_price >= 0) {
+            if (!$request->filled('minimum_price') || $maksimum_price >= $minimum_price) {
+                $productsQuery->where('price', '<=', $maksimum_price);
+            }
+        }
+
+        $products = $productsQuery
+            ->orderBy('price', 'asc')
+            ->paginate(10)
+            ->appends($request->except('page'));
 
         $displayedCategoryName = $categoryInput ?: 'Semua Kategori';
 
@@ -88,7 +103,9 @@ class SearchProductController extends Controller
             'searchQuery' => $query,
             'allCategories' => $allUniqueCategories,
             'currentCategoryName' => $displayedCategoryName,
-            'categories' => $categories
+            'categories' => $categories,
+            'minimum_price' => $request->input('minimum_price'),
+            'maksimum_price' => $request->input('maksimum_price'),
         ]);
     }
 }

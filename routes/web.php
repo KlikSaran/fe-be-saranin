@@ -45,6 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/search/consumer', [AdminConsumerController::class, 'search'])->name('search.consumer');
     Route::get('/search/consumer/product', [SearchProductController::class, 'search'])->name('search.consumer.product');
 
+    // Logout Route
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 });
 

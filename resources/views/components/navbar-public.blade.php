@@ -47,7 +47,6 @@
             <a href="{{ route('baskets-public.index') }}" class="nav-icon" id="navbarKeranjangBtn">
                 <i class="fas fa-shopping-cart"></i>
                 <span>Keranjang</span>
-                {{-- <span class="badge">3</span> --}} {{-- Example for cart count --}}
             </a>
 
             <a href="{{ route('transactions-public.index') }}" class="nav-icon" id="navbarTransaksiBtn">
@@ -71,8 +70,8 @@
                             <a href="{{ route('dashboards.index') }}"><i class="fas fa-home"></i> Dashboard</a>
                         @endif
                         <div class="divider"></div>
-                        <a href="{{ route('profiles-public.index') }}"><i class="fas fa-user-cog"></i> Setting Profil</a>
-                        <div class="divider"></div>
+                        {{-- <a href="{{ route('profiles-public.index') }}"><i class="fas fa-user-cog"></i> Setting Profil</a>
+                        <div class="divider"></div> --}}
                         <form method="POST" action="{{ route('logout') }}" style="margin:0;">
                             @csrf
                             <button type="submit" id="logoutBtn">

@@ -10,7 +10,7 @@
             <ul class="pc-navbar">
                 <li class="pc-item">
                     <a href="{{ route('dashboards.index') }}" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-plant-2"></i></span>
+                        <span class="pc-micon"><i class="ti ti-home"></i></span>
                         <span class="pc-mtext">Dashboard</span>
                     </a>
                 </li>
@@ -19,45 +19,22 @@
                     <label>Pages</label>
                     <i class="ti ti-news"></i>
                 </li>
-                {{-- <li class="pc-item pc-hasmenu">
-                    <a href="#!" class="pc-link"><span class="pc-micon"><i class="ti ti-menu"></i></span><span
-                            class="pc-mtext">Beranda</span><span class="pc-arrow"><i
-                                data-feather="chevron-right"></i></span></a>
-                    <ul class="pc-submenu">
-                        <li class="pc-item"><a class="pc-link" href="">
-                                <span class="pc-micon"><i class="ti ti-user"></i></span>
-                                <span class="pc-mtext">Tambah Klien</span>
-                            </a>
-                        </li>
-                        <li class="pc-item"><a class="pc-link" href="">
-                                <span class="pc-micon"><i class="ti ti-users"></i></span>
-                                <span class="pc-mtext">Tambah Tim</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
                 <li class="pc-item">
                     <a href="{{ route('products.index') }}" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-plant-2"></i></span>
+                        <span class="pc-micon"><i class="ti ti-package"></i></span>
                         <span class="pc-mtext">Data Produk</span>
                     </a>
                 </li>
                 <li class="pc-item">
                     <a href="{{ route('transactions.index') }}" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-lock"></i></span>
+                        <span class="pc-micon"><i class="ti ti-receipt"></i></span>
                         <span class="pc-mtext">Data Transaksi</span>
                     </a>
                 </li>
                 <li class="pc-item">
                     <a href="{{ route('consumers.index') }}" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-user-plus"></i></span>
+                        <span class="pc-micon"><i class="ti ti-users"></i></span>
                         <span class="pc-mtext">Data Pelanggan</span>
-                    </a>
-                </li>
-                <li class="pc-item">
-                    <a href="" class="pc-link">
-                        <span class="pc-micon"><i class="ti ti-user-plus"></i></span>
-                        <span class="pc-mtext">Hubungi Kami</span>
                     </a>
                 </li>
 
@@ -66,7 +43,7 @@
                     <i class="ti ti-brand-chrome"></i>
                 </li>
                 <li class="pc-item">
-                    <form method="POST" action="#">
+                    <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="pc-link" style="border: none; background: none; cursor: pointer;">
                             <div class="logout-menu" id="logout-menu">

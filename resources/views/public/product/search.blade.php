@@ -19,10 +19,20 @@
                         </span>
                     </h3>
                     <div class="filter-content">
-                        <div class="price-inputs">
-                            <input type="number" id="minPrice" placeholder="Harga Minimum" value="">
-                            <input type="number" id="maxPrice" placeholder="Harga Maksimum" value="">
-                        </div>
+                        <form id="priceFilterForm" action="{{ route('search.consumer.product') }}" method="GET">
+                            <div class="price-inputs">
+                                <input type="number" id="minPrice" name="minimum_price"
+                                    value="{{ old('minimum_price', $minimum_price ?? '') }}" placeholder="Harga Minimum"
+                                    min="0" required>
+
+                                <input type="number" id="maxPrice" name="maksimum_price"
+                                    value="{{ old('maksimum_price', $maksimum_price ?? '') }}" placeholder="Harga Maksimum"
+                                    min="0" required>
+
+                                <button type="submit" class="pay-btn">Filter</button>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
 
@@ -108,18 +118,79 @@
             const radios = document.querySelectorAll('input[name="category"]');
             const form = document.getElementById('categoryFilterForm');
 
+            // Kembalikan state open dari localStorage
+            const openSectionId = localStorage.getItem('openFilterSection');
+            if (openSectionId) {
+                const openSection = document.getElementById(openSectionId);
+                if (openSection) openSection.classList.add('open');
+            }
+
+            // Ketika radio diklik
             radios.forEach(radio => {
                 radio.addEventListener('change', function () {
+                    // Simpan section filter yang terbuka sebelum reload
+                    const section = radio.closest('.filter-section');
+                    if (section && section.id) {
+                        localStorage.setItem('openFilterSection', section.id);
+                    }
                     form.submit();
                 });
             });
-        });
 
-        document.querySelectorAll('.filter-title').forEach(title => {
-            title.addEventListener('click', () => {
-                const section = title.parentElement;
-                section.classList.toggle('open');
+            // Toggle buka/tutup manual
+            document.querySelectorAll('.filter-title').forEach(title => {
+                title.addEventListener('click', () => {
+                    const section = title.parentElement;
+                    section.classList.toggle('open');
+
+                    // Simpan atau hapus state terbuka
+                    if (section.classList.contains('open') && section.id) {
+                        localStorage.setItem('openFilterSection', section.id);
+                    } else if (section.id) {
+                        localStorage.removeItem('openFilterSection');
+                    }
+                });
             });
+        });
+    </script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('priceFilterForm');
+
+            ['minPrice', 'maxPrice'].forEach(id => {
+                const input = document.getElementById(id);
+                input.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            function toggleRpLabel(wrapperId, inputId) {
+                const wrapper = document.getElementById(wrapperId);
+                const input = document.getElementById(inputId);
+
+                const updateVisibility = () => {
+                    if (input.value.trim() !== '') {
+                        wrapper.classList.add('show');
+                    } else {
+                        wrapper.classList.remove('show');
+                    }
+                };
+
+                input.addEventListener('input', updateVisibility);
+                updateVisibility();
+            }
+
+            toggleRpLabel('minPriceWrapper', 'minPrice');
+            toggleRpLabel('maxPriceWrapper', 'maxPrice');
         });
     </script>
 

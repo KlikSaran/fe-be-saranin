@@ -20,9 +20,7 @@ class UsersTableSeeder extends Seeder
         }
 
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-
         DB::table('users')->truncate();
-
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
         $file = fopen($csvFile, 'r');
@@ -58,6 +56,15 @@ class UsersTableSeeder extends Seeder
             User::insert($chunk);
         }
 
+        User::create([
+            'fullname' => 'Admin',
+            'email' => 'admin@gmail.com',
+            'gender' => 'Male',
+            'password' => Hash::make('admin123'),
+            'role' => 'admin',
+        ]);
+
         $this->command->info('Seeding tabel users dari User.csv berhasil!');
+        $this->command->info('User admin berhasil dibuat!');
     }
 }

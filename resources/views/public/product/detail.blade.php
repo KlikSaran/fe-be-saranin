@@ -17,7 +17,6 @@
             <h1 class="product-title">{{ $productDetail->name }}</h1>
             <div class="product-price">Rp {{ number_format($productDetail->price, 0, ',', '.') }}</div>
 
-            <h3 class="section-title">Deskripsi:</h3>
             <p class="product-description">{{ $productDetail->description }}</p>
         </div>
 

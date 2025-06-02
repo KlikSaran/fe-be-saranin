@@ -34,8 +34,6 @@
     </div>
     <!-- [ Pre-loader ] End -->
 
-    <x-navbar-public :categories="$categories"></x-navbar-public>
-
     <div class="auth-main">
         <div class="auth-wrapper v3">
             <div class="auth-form">

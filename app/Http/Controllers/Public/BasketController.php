@@ -16,7 +16,10 @@ class BasketController extends Controller
     {
         $categories = Product::select('category', 'image')->get()->unique('category');
 
-        $getBasket = DetailTransaction::with('product')
+        $getBasket = DetailTransaction::whereHas('transaction.user', function ($query) {
+            $query->where('id', auth()->id());
+        })
+            ->with(['product', 'transaction.user'])
             ->latest()
             ->limit(10)
             ->get();

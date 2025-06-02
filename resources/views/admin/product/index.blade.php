@@ -26,7 +26,7 @@
                                     </button>
                                 </div>
                             </form>
-                            <a href="{{ route('products.create') }}" class="btn btn-primary">Tambah Produk</a>
+                            {{-- <a href="{{ route('products.create') }}" class="btn btn-primary">Tambah Produk</a> --}}
                         </div>
                         <div class="card-body d-flex flex-column align-items-center">
                             <table class="table table-hover">
@@ -39,7 +39,7 @@
                                         <th scope="col">Harga</th>
                                         <th scope="col">Stok</th>
                                         <th scope="col">Foto</th>
-                                        <th scope="col">Aksi</th>
+                                        {{-- <th scope="col">Aksi</th> --}}
                                     </tr>
                                 </thead>
                                 {{-- Asumsikan ini berada di dalam tag <table> dan <thead> sudah didefinisikan --}}
@@ -69,8 +69,7 @@
                                                         <span>Tidak ada gambar</span>
                                                     @endif
                                                 </td>
-                                                <td>
-                                                    {{-- Tombol Edit --}}
+                                                {{-- <td>
                                                     <button type="button" class="btn btn-sm btn-warning edit-button"
                                                         data-id="{{ $product->id }}" data-name="{{ $product->name }}"
                                                         data-category="{{ $product->category }}"
@@ -87,12 +86,11 @@
                                                         <button type="button" class="btn btn-danger btn-sm delete-btn"
                                                             data-id="{{ $product->id }}">Hapus</button>
                                                     </form>
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="7" class="text-center">Tidak ada data produk.</td> {{-- Sesuaikan
-                                                colspan dengan jumlah kolom Anda --}}
+                                                <td colspan="7" class="text-center">Produk tidak ditemukan.</td>
                                             </tr>
                                         @endforelse
                                     </tbody>
@@ -101,7 +99,7 @@
                                     {{ $products->links('components.custom-pagination') }}
                                 </div>
 
-                                <div class="modal fade" id="editProductModal" tabindex="-1" aria-hidden="true">
+                                {{-- <div class="modal fade" id="editProductModal" tabindex="-1" aria-hidden="true">
                                     <div class="modal-dialog modal-md">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -133,7 +131,8 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="edit_stock" class="form-label">Status Stok</label>
-                                                        <select class="form-select" id="edit_stock" name="stock" value={{ $product->stock }}>
+                                                        <select class="form-select" id="edit_stock" name="stock" value={{
+                                                            $product->stock }}>
                                                             <option value="True">Tersedia</option>
                                                             <option value="False">Tidak Tersedia</option>
                                                         </select>
@@ -163,7 +162,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                         </div>
                     </div>
 
@@ -175,35 +174,35 @@
         </div>
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            document.querySelectorAll(".edit-button").forEach(button => {
-                button.addEventListener("click", function () {
-                    let productId = this.getAttribute("data-id");
-                    let name = this.getAttribute("data-name");
-                    let category = this.getAttribute("data-category");
-                    let price = this.getAttribute("data-price");
-                    let stock = this.getAttribute("data-stock");
-                    let description = this.getAttribute("data-description");
-                    let image = this.getAttribute("data-image");
+        // document.addEventListener("DOMContentLoaded", function () {
+        //     document.querySelectorAll(".edit-button").forEach(button => {
+        //         button.addEventListener("click", function () {
+        //             let productId = this.getAttribute("data-id");
+        //             let name = this.getAttribute("data-name");
+        //             let category = this.getAttribute("data-category");
+        //             let price = this.getAttribute("data-price");
+        //             let stock = this.getAttribute("data-stock");
+        //             let description = this.getAttribute("data-description");
+        //             let image = this.getAttribute("data-image");
 
-                    document.getElementById("edit_modal_id").value = productId;
-                    document.getElementById("edit_name").value = name;
-                    document.getElementById("edit_category").value = category;
-                    document.getElementById("edit_price").value = price;
-                    document.getElementById("edit_stock").value = stock;
-                    document.getElementById("edit_description").value = description;
+        //             document.getElementById("edit_modal_id").value = productId;
+        //             document.getElementById("edit_name").value = name;
+        //             document.getElementById("edit_category").value = category;
+        //             document.getElementById("edit_price").value = price;
+        //             document.getElementById("edit_stock").value = stock;
+        //             document.getElementById("edit_description").value = description;
 
-                    if (image) {
-                        document.getElementById("preview-image").src = "/storage/" + image;
-                    }
+        //             if (image) {
+        //                 document.getElementById("preview-image").src = "/storage/" + image;
+        //             }
 
-                    document.getElementById("editProductForm").setAttribute("action", "/products/" + productId);
+        //             document.getElementById("editProductForm").setAttribute("action", "/products/" + productId);
 
-                    let editModal = new bootstrap.Modal(document.getElementById("editProductModal"));
-                    editModal.show();
-                });
-            });
-        });
+        //             let editModal = new bootstrap.Modal(document.getElementById("editProductModal"));
+        //             editModal.show();
+        //         });
+        //     });
+        // });
 
 
         let searchTimeout;
@@ -247,6 +246,7 @@
                 timer: 3000
             });
         @endif
+
         // Konfirmasi penghapusan produk
         document.addEventListener('DOMContentLoaded', function () {
             const deleteButtons = document.querySelectorAll('.delete-btn');

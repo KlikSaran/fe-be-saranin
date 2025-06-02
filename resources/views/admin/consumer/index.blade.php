@@ -26,7 +26,7 @@
                                     </button>
                                 </div>
                             </form>
-                            <a href="" class="btn btn-primary">Tambah Pelanggan</a>
+                            {{-- <a href="" class="btn btn-primary">Tambah Pelanggan</a> --}}
                         </div>
                         <div class="card-body d-flex flex-column align-items-center">
                             <table class="table table-hover">
@@ -37,11 +37,11 @@
                                         <th scope="col">Email</th>
                                         <th scope="col">Jenis Kelamin</th>
                                         <th scope="col">Jumlah Transaksi</th>
-                                        <th scope="col">Action</th>
+                                        {{-- <th scope="col">Action</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($userTransactions as $user)
+                                    @forelse ($userTransactions as $user)
                                         <tr>
                                             <th scope="row">
                                                 {{ ($userTransactions->currentPage() - 1) * $userTransactions->perPage() + $loop->iteration }}
@@ -84,7 +84,11 @@
                                                 </div>
                                             </td> --}}
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="7" class="text-center">Pelanggan tidak ditemukan.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                             <div class="pagination-container">

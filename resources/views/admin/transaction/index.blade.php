@@ -26,28 +26,30 @@
                                     </button>
                                 </div>
                             </form>
-                            {{-- <a href="{{ route('transactions.create') }}" class="btn btn-primary">Tambah Transaksi</a> --}}
+                            {{-- <a href="{{ route('transactions.create') }}" class="btn btn-primary">Tambah Transaksi</a>
+                            --}}
                         </div>
                         <div class="card-body d-flex flex-column align-items-center">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
                                         <th scope="col">No.</th>
+                                        <th scope="col">Nama Pembeli</th>
                                         <th scope="col">Nama Produk</th>
                                         <th scope="col">Kategori</th>
                                         <th scope="col">Harga</th>
                                         <th scope="col">Total Harga</th>
                                         <th scope="col">Stok</th>
                                         <th scope="col">Jumlah Barang</th>
-                                        <th scope="col">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($transactions as $transaction)
+                                    @forelse ($transactions as $transaction)
                                         <tr>
                                             <th scope="row">
                                                 {{ ($transactions->currentPage() - 1) * $transactions->perPage() + $loop->iteration }}
                                             </th>
+                                            <td>{{ $transaction->transaction->user->fullname ?? 'User tidak ditemukan' }}</td>
                                             <td>{{ $transaction->product->name }}</td>
                                             <td>{{ $transaction->product->category }}</td>
                                             <td>{{ $transaction->product->price }}</td>
@@ -74,7 +76,11 @@
                                                 </div>
                                             </td> --}}
                                         </tr>
-                                    @endforeach
+                                    @empty
+                                        <tr>
+                                            <td colspan="7" class="text-center">Transaksi tidak ditemukan.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                             <div class="pagination-container">

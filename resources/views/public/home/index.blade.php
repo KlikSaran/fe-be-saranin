@@ -2,24 +2,23 @@
 @section('content')
     <x-navbar-public :categories="$categories"></x-navbar-public>
     <!-- REKOMENDASI -->
-    <section class="recommendation-section" id="recommendation-section">
-        @auth
-            <h2>
-                Rekomendasi Produk buat {{ Auth::user()->fullname }}
-            </h2>
-        @endauth
+    @auth
+        @if (Auth::user()->role !== 'admin')
+            <section class="recommendation-section" id="recommendation-section">
+                <h2 id="recommendationTitle">
+                    Rekomendasi Produk buat {{ Auth::user()->fullname }}
+                </h2>
 
-        <div class="recommendation-container">
-            <button id="prevBtn" class="slider-button">‹</button>
+                <div class="recommendation-container">
+                    <button id="prevBtn" class="slider-button">‹</button>
 
-            <div id="recommendationSlider">
-                <!-- Kartu rekomendasi akan di-render di sini -->
-            </div>
+                    <div id="recommendationSlider"></div>
 
-            <button id="nextBtn" class="slider-button">›</button>
-        </div>
-
-    </section>
+                    <button id="nextBtn" class="slider-button">›</button>
+                </div>
+            </section>
+        @endif
+    @endauth
 
     <!-- SEMUA PRODUK -->
     <section class="all-products-section">
@@ -48,17 +47,19 @@
     <div class="pagination-container">
         {{ $products->links('components.custom-pagination') }}
     </div>
+
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             @auth
                 fetchRecommendations({{ Auth::user()->id }});
             @else
-                                                                                                                                                                                                                                            const recommendationSection = document.getElementById('recommendation-section');
+                                const recommendationSection = document.getElementById('recommendation-section');
                 if (recommendationSection) {
-                    recommendationSection.style.display = 'none'; // Sembunyikan jika tidak login
+                    recommendationSection.style.display = 'none';
                 }
             @endauth
-                                                                                                                });
+                                                                                                                                    });
 
         function fetchRecommendations(userId) {
             fetch("http://127.0.0.1:5000/predict", {
@@ -81,14 +82,13 @@
                             const item = document.createElement('div');
                             item.className = 'recommendation-item';
                             item.innerHTML = `
-                                                                                    <a href="/products/${product.name}" class="recommendation-card-link">
-                                                                                        <div class="recommendation-card">
-                                                                                            <h3>${product.name}</h3>
-                                                                                            <p>${product.category}</p>
-                                                                                            <small>✨ ${product.trusted_score.toFixed(2)}</small>
-                                                                                        </div>
-                                                                                    </a>
-                                                                                `;
+                                                        <a href="/products/${product.name}" class="recommendation-card-link">
+                                                            <div class="recommendation-card">
+                                                                <h3>${product.name}</h3>
+                                                                <p>${product.category}</p>
+                                                            </div>
+                                                        </a>
+                                                    `;
                             slider.appendChild(item);
                         });
                     } else {
@@ -99,9 +99,7 @@
                     console.error("Error fetching recommendations:", error);
                 });
         }
-    </script>
 
-    <script>
         document.getElementById('prevBtn').addEventListener('click', function () {
             document.getElementById('recommendationSlider').scrollBy({
                 left: -250,

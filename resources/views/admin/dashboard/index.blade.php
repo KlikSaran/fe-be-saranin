@@ -55,103 +55,42 @@
                                             <th>Kategori</th>
                                             <th>Harga</th>
                                             <th>Stok</th>
-                                            <th>Tanggal</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @forelse ($clientContents as $content)
-                                        <tr>
-                                            @if($content->client)
-                                            <th scope="row">{{ ($clientContents->currentPage() - 1) *
-                                                $clientContents->perPage() + $loop->iteration }}</th>
-                                            <td>Beranda</td>
-                                            <td>{{ $content->client->name }}</td>
-                                            <td>{{ $content->created_at->format('d M Y') }}</td>
-                                            <td><span class="d-flex align-items-center gap-2"><i
-                                                        class="fas fa-circle text-primary f-10 m-r-5"></i>Baru
-                                                    Ditambahkan</span>
-                                            </td>
-                                            @elseif($content->team)
-                                            <th scope="row">{{ ($clientContents->currentPage() - 1) *
-                                                $clientContents->perPage() + $loop->iteration }}</th>
-                                            <td>Beranda</td>
-                                            <td>{{ $content->team->name }}</td>
-                                            <td>{{ $content->created_at->format('d M Y') }}</td>
-                                            <td><span class="d-flex align-items-center gap-2"><i
-                                                        class="fas fa-circle text-primary f-10 m-r-5"></i>Baru
-                                                    Ditambahkan</span>
-                                            </td>
-                                            @elseif($content->study)
-                                            <th scope="row">{{ ($clientContents->currentPage() - 1) *
-                                                $clientContents->perPage() + $loop->iteration }}</th>
-                                            <td>Bidang Studi</td>
-                                            <td>{{ $content->study->name }}</td>
-                                            <td>{{ $content->created_at->format('d M Y') }}</td>
-                                            <td><span class="d-flex align-items-center gap-2"><i
-                                                        class="fas fa-circle text-primary f-10 m-r-5"></i>Baru
-                                                    Ditambahkan</span>
-                                            </td>
-                                            @elseif($content->service)
-                                            <th scope="row">{{ ($clientContents->currentPage() - 1) *
-                                                $clientContents->perPage() + $loop->iteration }}</th>
-                                            <td>Layanan Jasa</td>
-                                            <td>{{ $content->service->name }}</td>
-                                            <td>{{ $content->created_at->format('d M Y') }}</td>
-                                            <td><span class="d-flex align-items-center gap-2"><i
-                                                        class="fas fa-circle text-primary f-10 m-r-5"></i>Baru
-                                                    Ditambahkan</span>
-                                            </td>
-                                            @elseif($content->studentWork)
-                                            <th scope="row">{{ ($clientContents->currentPage() - 1) *
-                                                $clientContents->perPage() + $loop->iteration }}</th>
-                                            <td>Karya Siswa</td>
-                                            <td>{{ $content->studentWork->name }}</td>
-                                            <td>{{ $content->created_at->format('d M Y') }}</td>
-                                            <td><span class="d-flex align-items-center gap-2"><i
-                                                        class="fas fa-circle text-primary f-10 m-r-5"></i>Baru
-                                                    Ditambahkan</span>
-                                            </td>
-                                            @elseif($content->testimony)
-                                            <th scope="row">{{ ($clientContents->currentPage() - 1) *
-                                                $clientContents->perPage() + $loop->iteration }}</th>
-                                            <td>Testimoni</td>
-                                            <td>{{ $content->testimony->name }}</td>
-                                            <td>{{ $content->created_at->format('d M Y') }}</td>
-                                            <td><span class="d-flex align-items-center gap-2"><i
-                                                        class="fas fa-circle text-primary f-10 m-r-5"></i>Baru
-                                                    Ditambahkan</span>
-                                            </td>
-                                            @elseif($content->article)
-                                            <th scope="row">{{ ($clientContents->currentPage() - 1) *
-                                                $clientContents->perPage() + $loop->iteration }}</th>
-                                            <td>Artikel</td>
-                                            <td>{{ $content->article->title }}</td>
-                                            <td>{{ $content->created_at->format('d M Y') }}</td>
-                                            <td><span class="d-flex align-items-center gap-2"><i
-                                                        class="fas fa-circle text-primary f-10 m-r-5"></i>Baru
-                                                    Ditambahkan</span>
-                                            </td>
-                                            @elseif($content->contact)
-                                            <th scope="row">{{ ($clientContents->currentPage() - 1) *
-                                                $clientContents->perPage() + $loop->iteration }}</th>
-                                            <td>Hubungi Kami</td>
-                                            <td>{{ $content->contact->location }}</td>
-                                            <td>{{ $content->created_at->format('d M Y') }}</td>
-                                            <td><span class="d-flex align-items-center gap-2"><i
-                                                        class="fas fa-circle text-primary f-10 m-r-5"></i>Baru
-                                                    Ditambahkan</span>
-                                            </td>
-                                            @endif
-                                        </tr>
+                                        @forelse ($productContent as $content)
+                                            <tr>
+                                                <th scope="row">{{ ($productContent->currentPage() - 1) * $productContent->perPage() + $loop->iteration }}</th>
+                                                <td>{{ $content->name }}</td>
+                                                <td>{{ $content->category }}</td>
+                                                <td>Rp {{ number_format($content->price, 0, ',', '.') }}</td>
+                                                <td>
+                                                    <span class="d-flex align-items-center gap-2">
+                                                        <i class="fas fa-circle text-primary f-10 m-r-5"></i>
+                                                       {{ $content->stock ? 'Tersedia' : 'Tidak Tersedia' }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <form id="deleteForm-{{ $content->id }}"
+                                                        action="{{ route('products.destroy', $content->id) }}" method="POST"
+                                                        class="ms-2 d-inline">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="button" class="btn btn-danger btn-sm delete-btn"
+                                                            data-id="{{ $content->id }}">Hapus</button>
+                                                    </form>
+                                                </td>
+                                            </tr>
                                         @empty
-                                        <tr>
-                                            <td colspan="5" class="text-center">Content not available</td>
-                                        </tr>
-                                        @endforelse --}}
+                                            <tr>
+                                                <td colspan="5" class="text-center">Content not available</td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                                 <div class="pagination-container">
-                                    {{-- {{ $clientContents->links('components.custom-pagination') }} --}}
+                                    {{ $productContent->links('components.custom-pagination') }}
                                 </div>
                             </div>
                         </div>
@@ -160,4 +99,31 @@
             </div>
         </div>
     </div>
+
+    <script>
+         // Konfirmasi penghapusan produk
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const productId = this.dataset.id;
+                    Swal.fire({
+                        title: 'Yakin ingin menghapus?',
+                        text: "Data tidak dapat dikembalikan setelah dihapus!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            document.getElementById(`deleteForm-${productId}`).submit();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 @endsection

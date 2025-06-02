@@ -60,24 +60,21 @@
     justify-content: space-between;
     align-items: center;
     color: #555;
+    font-size: 14px;
     font-weight: 600;
-    font-size: 16px;
 }
 
 .filter-content {
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    transition: max-height 0.5s ease, opacity 0.5s ease;
+    transition: max-height 2s ease;
 }
 
 .filter-section.open .filter-content {
     opacity: 1;
     max-height: max-content;
     padding: 10px;
-}
-.dropdown-arrow {
-    transition: transform 0.5s ease;
 }
 
 .filter-section.open .dropdown-arrow {
@@ -128,6 +125,7 @@
     object-fit: cover;
     border: none;
 }
+
 
 /* ============================== */
 /*           Responsif           */

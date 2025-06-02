@@ -7,6 +7,7 @@ use App\Models\DetailTransaction;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\User;
+use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -20,8 +21,9 @@ class DashboardController extends Controller
         $products = Product::count();
         $transactions = Transaction::count();
         $sellout = DetailTransaction::sum('quantity');
+        $productContent = Product::latest()->paginate(10);
 
-        return view('admin.dashboard.index', compact(['users', 'products', 'transactions', 'sellout']));
+        return view('admin.dashboard.index', compact(['users', 'products', 'transactions', 'sellout', 'productContent']));
     }
 
     /**

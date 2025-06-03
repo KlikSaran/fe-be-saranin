@@ -13,6 +13,7 @@
 .search-title {
     font-size: 16px;
     margin-left: 0px;
+    margin-bottom: 0px;
 }
 
 .search-subtitle {
@@ -68,7 +69,7 @@
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    transition: max-height 2s ease;
+    transition: 0.5s ease-out, opacity 0.5s ease-in;
 }
 
 .filter-section.open .filter-content {
@@ -83,7 +84,7 @@
 .dropdown-arrow svg {
     width: 20px;
     height: 20px;
-    transition: transform 0.3s ease;
+    transition: 1s all ease-in-out;
     display: block;
     color: #555;
     border-radius: 50%;
@@ -125,7 +126,6 @@
     object-fit: cover;
     border: none;
 }
-
 
 /* ============================== */
 /*           Responsif           */

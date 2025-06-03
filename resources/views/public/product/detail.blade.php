@@ -22,7 +22,7 @@
 
         <!-- Kolom Pemesanan -->
         <div class="order-card" id="orderCard">
-            <h3 class="section-title">Atur Jumlah</h3>
+            <h1 class="section-title">Atur Jumlah</h1>
 
             <form action="{{ route('products-public.store') }}" method="POST">
                 @csrf
@@ -66,7 +66,7 @@
 
     <!-- Section Rekomendasi Produk Sejenis -->
     <div class="recommendation-section">
-        <h2 class="recommendation-title">Produk Serupa Lainnya</h2>
+        <h1 class="recommendation-title">Produk Serupa Lainnya</h1>
         <div class="recommendation-grid" id="similarProducts">
             @foreach ($productSimilar as $similar)
                 <a href="{{ route('products-public.show', $similar->id) }}" class="product-card">

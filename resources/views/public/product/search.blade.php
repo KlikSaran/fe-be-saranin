@@ -3,7 +3,7 @@
     <x-navbar-public :categories="$categories"></x-navbar-public>
     <div class="search-products-wrapper">
         <div class="search-header">
-            <h2 class="search-title">Filter</h2>
+            <h1 class="search-title">Filter</h1>
         </div>
 
         <div class="search-container">

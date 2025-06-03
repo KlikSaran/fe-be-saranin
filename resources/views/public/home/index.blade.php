@@ -1,28 +1,40 @@
 @extends('index')
 @section('content')
     <x-navbar-public :categories="$categories"></x-navbar-public>
+
     <!-- REKOMENDASI -->
     @auth
-        @if (Auth::user()->role !== 'admin')
-            <section class="recommendation-section" id="recommendation-section">
-                <h2 id="recommendationTitle">
-                    Rekomendasi Produk buat {{ Auth::user()->fullname }}
-                </h2>
+        <section class="recommendation-section" id="recommendation-section">
 
-                <div class="recommendation-container">
-                    <button id="prevBtn" class="slider-button">‹</button>
+            <div class="recommendation-container">
+                <h1 id="recommendationTitle">
+                    Rekomendasi Produk untuk {{ Auth::user()->fullname }}
+                </h1>
+                <button id="prevBtn" class="slider-button">‹</button>
 
-                    <div id="recommendationSlider"></div>
+                <div id="recommendationSlider"></div>
 
-                    <button id="nextBtn" class="slider-button">›</button>
+                <button id="nextBtn" class="slider-button">›</button>
+            </div>
+
+            @if (Auth::user()->role !== 'admin')
+                <div class="recommendation-cb-container">
+                    <h1 id="recommendationTitle">
+                        Rekomendasi Produk Sesuai Preferensi {{ Auth::user()->fullname }}
+                    </h1>
+                    <button id="prevCbBtn" class="slider-cb-button">‹</button>
+
+                    <div id="cbRecommendation"></div>
+
+                    <button id="nextCbBtn" class="slider-cb-button">›</button>
                 </div>
-            </section>
-        @endif
+            @endif
+        </section>
     @endauth
 
     <!-- SEMUA PRODUK -->
     <section class="all-products-section">
-        <h2>Semua Produk</h2>
+        <h1>Semua Produk</h1>
         <div class="all-products">
             @foreach ($products as $product)
                 <a href="{{ route('products-public.show', $product->id) }}"
@@ -52,68 +64,139 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             @auth
-                fetchRecommendations({{ Auth::user()->id }});
+                                        const loggedInUserId = {{ Auth::user()->id }};
+                console.log("ID User Login:", loggedInUserId);
+
+                fetchRecommendations(loggedInUserId);
+                fetchCBRecommendations(loggedInUserId);
             @else
-                                const recommendationSection = document.getElementById('recommendation-section');
+                                        const recommendationSection = document.getElementById('recommendation-section');
                 if (recommendationSection) {
                     recommendationSection.style.display = 'none';
                 }
             @endauth
-                                                                                                                                    });
 
-        function fetchRecommendations(userId) {
-            fetch("http://127.0.0.1:5000/predict", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    id_user: userId,
-                    count_items: 20
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.recommendations && data.recommendations.length > 0) {
-                        const slider = document.getElementById('recommendationSlider');
-                        slider.innerHTML = '';
+                function fetchRecommendations(userId) {
+                    fetch("http://127.0.0.1:5000/predict", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ id_user: userId, count_items: 20 })
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("User ID:", data.user_id);
+                            console.log("Message:", data.message);
+                            console.log("Recommendations:", data.recommendations);
 
-                        data.recommendations.forEach(product => {
-                            const item = document.createElement('div');
-                            item.className = 'recommendation-item';
-                            item.innerHTML = `
-                                                        <a href="/products/${product.name}" class="recommendation-card-link">
-                                                            <div class="recommendation-card">
-                                                                <h3>${product.name}</h3>
-                                                                <p>${product.category}</p>
-                                                            </div>
-                                                        </a>
-                                                    `;
-                            slider.appendChild(item);
+                            const slider = document.getElementById('recommendationSlider');
+                            if (!slider) {
+                                console.warn("Element recommendationSlider tidak ditemukan di DOM.");
+                                return;  // Stop lanjut supaya tidak error
+                            }
+
+                            slider.innerHTML = '';
+
+                            if (data.recommendations && data.recommendations.length > 0) {
+                                renderRecommendations(data.recommendations, slider);
+                            } else {
+                                slider.innerHTML = "<p>Tidak ada rekomendasi untuk user ini.</p>";
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Error /predict:", error);
+                            const slider = document.getElementById('recommendationSlider');
+                            if (slider) {
+                                slider.innerHTML = "<p>Gagal mengambil rekomendasi utama.</p>";
+                            }
                         });
-                    } else {
-                        document.getElementById('recommendationSlider').innerHTML = "<p>Tidak ada rekomendasi tersedia.</p>";
-                    }
-                })
-                .catch(error => {
-                    console.error("Error fetching recommendations:", error);
-                });
-        }
+                }
 
-        document.getElementById('prevBtn').addEventListener('click', function () {
-            document.getElementById('recommendationSlider').scrollBy({
-                left: -250,
-                behavior: 'smooth'
-            });
+            function fetchCBRecommendations(userId) {
+                fetch("http://127.0.0.1:5000/predictcb", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id_user: userId, count_items: 20 })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        const cbContainer = document.getElementById('cbRecommendation');
+                        if (!cbContainer) {
+                            console.error("Element with id 'cbRecommendation' not found.");
+                            return;
+                        }
+
+                        if (data.recommendations && data.recommendations.length > 0) {
+                            renderCBRecommendations(data.recommendations, cbContainer);
+                        } else {
+                            cbContainer.innerHTML = "<p>Tidak ada rekomendasi berbasis preferensi.</p>";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error fetching CB recommendations:", error);
+                    });
+            }
+
+            function renderRecommendations(recommendations, container) {
+                container.innerHTML = '';
+                recommendations.forEach(product => {
+                    const item = document.createElement('div');
+                    item.className = 'recommendation-item';
+                    item.innerHTML = `
+                                        <a href="/products/${encodeURIComponent(product.name)}" class="recommendation-card-link">
+                                            <div class="product-card">
+                                                <img src="${getProductImage(product)}" alt="${product.name}" loading="lazy" />
+                                                <h3>${product.name}</h3>
+                                                <p>Rp ${parseInt(product.harga).toLocaleString('id-ID')}</p>
+                                                <p>${product.category}</p>
+                                            </div>
+                                        </a>
+                                    `;
+                    container.appendChild(item);
+                });
+            }
+
+            function renderCBRecommendations(recommendations, container) {
+                container.innerHTML = '';
+                recommendations.forEach(product => {
+                    const item = document.createElement('div');
+                    item.className = 'recommendation-item';
+                    item.innerHTML = `
+                                        <a href="/products/${encodeURIComponent(product.name)}" class="recommendation-card-link">
+                                            <div class="product-card">
+                                                <img src="${getProductImage(product)}" alt="${product.name}" loading="lazy" />
+                                                <h3>${product.name}</h3>
+                                                <p>Rp ${parseInt(product.harga).toLocaleString('id-ID')}</p>
+                                                <p>${product.category}</p>
+                                            </div>
+                                        </a>
+                                    `;
+                    container.appendChild(item);
+                });
+            }
+
+            function getProductImage(product) {
+                // Jika `product.image` sudah berupa path seperti 'images/xxx.jpg', cukup return saja
+                // Kalau kamu simpan path dari backend beda, sesuaikan di sini
+                // Contoh backend mengirim image seperti 'product_name.jpg' maka prefix storage misal:
+                return `/storage/${product.image}`;
+            }
         });
 
-        document.getElementById('nextBtn').addEventListener('click', function () {
-            document.getElementById('recommendationSlider').scrollBy({
-                left: 250,
-                behavior: 'smooth'
-            });
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            document.getElementById('recommendationSlider').scrollBy({ left: -250, behavior: 'smooth' });
+        });
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            document.getElementById('recommendationSlider').scrollBy({ left: 250, behavior: 'smooth' });
+        });
+
+        document.getElementById('prevCbBtn').addEventListener('click', () => {
+            document.getElementById('cbRecommendation').scrollBy({ left: -250, behavior: 'smooth' });
+        });
+        document.getElementById('nextCbBtn').addEventListener('click', () => {
+            document.getElementById('cbRecommendation').scrollBy({ left: 250, behavior: 'smooth' });
         });
     </script>
+
 
 
 @endsection

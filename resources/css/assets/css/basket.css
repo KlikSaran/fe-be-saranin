@@ -2,7 +2,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: "Poppins", sans-serif;
 }
 
 body {
@@ -167,7 +166,7 @@ body {
     margin-top: 10px;
 }
 
-#zoomImage{
+#zoomImage {
     width: 20px;
     height: auto;
 }

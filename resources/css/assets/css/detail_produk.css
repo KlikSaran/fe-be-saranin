@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Inter", sans-serif;
 }
 
 body {
@@ -11,12 +10,12 @@ body {
     line-height: 1.6;
 }
 .product-image-container {
-    width: 400px; /* Adjust to your desired main image display width */
-    height: 400px; /* Adjust to your desired main image display height */
-    overflow: hidden; /* This is crucial to hide the parts of the scaled image that are outside the container */
-    position: relative; /* Needed for absolute positioning of the image if you go for a different JS approach */
-    border: 1px solid #eee; /* Optional: adds a border */
-    cursor: crosshair; /* Indicates a zoom/pan interaction */
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #eee;
+    cursor: crosshair;
 }
 
 .product-images {
@@ -27,12 +26,11 @@ body {
 #zoomImage {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the image covers the area, might crop a bit */
-    transition: transform 0.2s ease-out; /* Smooth transition for scaling */
-    transform-origin: center center; /* Zoom from the center initially */
+    object-fit: cover;
+    transition: transform 0.2s ease-out;
+    transform-origin: center center;
 }
 
-/* We don't add a hover scale directly in CSS here because JavaScript will handle it dynamically */
 .product-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -42,32 +40,24 @@ body {
     padding: 0 30px;
 }
 
-/* Kolom Gambar Produk */
-
 /* Kolom Detail Produk */
 .product-details {
     padding: 10px 0;
 }
 
 .product-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #222;
+    font-size: 16px;
+    margin-bottom: 0px;
 }
 
 .product-price {
     font-size: 22px;
-    font-weight: bold;
     color: #3734a9;
     margin-bottom: 25px;
 }
 
 .section-title {
-    font-size: 18px;
-    font-weight: 600;
-    margin: 25px 0 15px 0;
-    color: #444;
+    font-size: 16px;
 }
 
 .variants-list {
@@ -204,16 +194,15 @@ body {
 
 /* Section Rekomendasi */
 .recommendation-section {
-    max-width: 1400px;
+    width: 100%;
     margin: 0 auto 40px auto;
     padding: 0 30px;
+    text-align: left;
 }
 
 .recommendation-title {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
+    font-size: 16px;
+    margin-left: auto;
 }
 
 .recommendation-grid {

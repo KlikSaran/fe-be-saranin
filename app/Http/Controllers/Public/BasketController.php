@@ -23,6 +23,10 @@ class BasketController extends Controller
             ->latest()
             ->limit(10)
             ->get();
+        // $getBasket = DetailTransaction::with('product')
+        //     ->latest()
+        //     ->limit(10)
+        //     ->get();
 
         $basketIds = $getBasket->pluck('id')->implode(',');
         $basketQuantities = $getBasket->pluck('quantity', 'id')->toArray();

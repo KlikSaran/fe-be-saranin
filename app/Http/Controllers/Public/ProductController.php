@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\DetailTransaction;
 use App\Models\Product;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -41,7 +43,14 @@ class ProductController extends Controller
             'total_price' => 'required|string',
         ]);
 
+        $userId = Auth::id();
+
+        Transaction::create([
+            'user_id' => $userId,
+        ]);
+
         DetailTransaction::create([
+            'transaction_id' => Transaction::where('user_id', $userId)->latest()->first()->id,
             'product_id' => $request->product_id,
             'quantity' => $request->quantity,
             'price' => $request->price,

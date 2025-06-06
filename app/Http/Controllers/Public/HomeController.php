@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\DetailTransaction;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 

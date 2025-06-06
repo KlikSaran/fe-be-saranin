@@ -45,23 +45,24 @@ class ProductController extends Controller
 
         $userId = Auth::id();
 
-        Transaction::create([
+        $transaction = Transaction::create([
             'user_id' => $userId,
         ]);
 
         DetailTransaction::create([
-            'transaction_id' => Transaction::where('user_id', $userId)->latest()->first()->id,
+            'transaction_id' => $transaction->id,
             'product_id' => $request->product_id,
             'quantity' => $request->quantity,
             'price' => $request->price,
             'total_price' => $request->total_price
         ]);
 
-        return redirect()->route('baskets-public.index')->with('productSuccessAlert', 'Produk berhasil ditambahkan ke keranjang.');
+        // Simpan transaction_id ke session
+        session(['last_transaction_id' => $transaction->id]);
+
+        return redirect()->route('baskets-public.index')
+            ->with('productSuccessAlert', 'Produk berhasil ditambahkan ke keranjang.');
     }
-
-
-
 
     /**
      * Display the specified resource.

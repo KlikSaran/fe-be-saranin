@@ -17,33 +17,38 @@
                 @if($getBasket)
                     @foreach($getBasket as $item)
                         @if($item->product)
-                            <div class="cart-item" data-id="{{ $item->id }}" {{-- ID DetailTransaction --}}
-                                data-product-id="{{ $item->product->id }}" {{-- ID Produk --}} data-price="{{ $item->product->price }}"
-                                data-stock="{{ $item->product->stock }}">
-                                <input type="checkbox" class="item-check" data-id="{{ $item->id }}">
-                                <div class="item-image">
-                                    <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}"
-                                        loading="lazy" id="zoomImage" style="width: 80px; height: 80px;">
-                                </div>
-                                <div class="item-info">
-                                    <h3 class="item-name">{{ $item->product->name }}</h3>
-                                    <div class="item-price">Rp{{ number_format($item->product->price, 0, ',', '.') }}</div>
-                                </div>
-                                <div class="item-actions">
-                                    <div class="item-stock">
-                                        <div class="quantity-btn minus">-</div>
-                                        <input type="number" name="quantity" class="quantity-input" value="{{ $item->quantity }}"
-                                            min="1" data-id="{{ $item->id }}" readonly>
-                                        <div class="quantity-btn plus">+</div>
+                            <a href="{{ route('products-public.show', $item->product->id) }}" class="cart-item-link">
+                                <div class="cart-item" data-id="{{ $item->id }}" data-product-id="{{ $item->product->id }}"
+                                    data-price="{{ $item->product->price }}" data-stock="{{ $item->product->stock }}">
+
+                                    <input type="checkbox" class="item-check" data-id="{{ $item->id }}">
+
+                                    <div class="item-image">
+                                        <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}"
+                                            loading="lazy" id="zoomImage" style="width: 80px; height: 80px;">
                                     </div>
-                                    <button class="delete-btn" data-id="{{ $item->id }}" aria-label="Hapus item">🗑️</button>
+                                    <div class="item-info">
+                                        <h3 class="item-name">{{ $item->product->name }}</h3>
+                                        <div class="item-price">Rp{{ number_format($item->product->price, 0, ',', '.') }}</div>
+                                    </div>
+
+                                    <div class="item-actions">
+                                        <div class="item-stock">
+                                            <div class="quantity-btn minus">-</div>
+                                            <input type="number" name="quantity" class="quantity-input" value="{{ $item->quantity }}"
+                                                min="1" data-id="{{ $item->id }}" readonly>
+                                            <div class="quantity-btn plus">+</div>
+                                        </div>
+                                        <button class="delete-btn" data-id="{{ $item->id }}" aria-label="Hapus item">🗑️</button>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         @endif
                     @endforeach
                 @else
                     <p style="text-align:center; padding: 20px; color: #777;">Keranjang Anda kosong.</p>
                 @endif
+
             </div>
         </div>
 

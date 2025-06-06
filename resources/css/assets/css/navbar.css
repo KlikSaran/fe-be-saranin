@@ -18,9 +18,9 @@ nav {
     padding: 15px 5%;
     background-color: white;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    position: sticky; /* Ganti dari relative */
-    top: 0; /* Menempelkannya di bagian atas */
-    z-index: 1000; /* Agar berada di atas elemen lain */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 nav h2 {
@@ -250,12 +250,134 @@ nav h2 {
     align-items: center;
 }
 
+/* Hamburger icon */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: #333;
+    transition: 0.3s;
+}
+
+/* Mobile menu */
+.nav-mobile-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    width: 100%;
+    padding: 15px 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+.nav-mobile-menu a {
+    padding: 10px 0;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.nav-mobile-menu a:hover {
+    color: #3734a9;
+}
+
+.nav-icon.active {
+    color: #3734a9;
+    border-radius: 8px;
+}
+
+.nav-icon {
+    position: relative;
+}
+
+.badge-cart {
+    position: absolute;
+    top: 0;
+    right: -5px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+}
+
 @media (max-width: 768px) {
-    .container-search {
+    .container-search,
+    .nav-icons,
+    .kategori-dropdown,
+    .kategori-btn {
         display: none;
     }
 
-    .nav-icons {
-        gap: 15px;
+    .hamburger {
+        display: block;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background-color: #555;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+
+    .nav-mobile-menu {
+        display: none;
+        flex-direction: column;
+        background: white;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        z-index: 999;
+    }
+
+    .nav-mobile-menu.show {
+        display: flex;
+    }
+
+    .mobile-search {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .mobile-search input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px 0 0 20px;
+    }
+
+    .mobile-search button {
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-left: none;
+        border-radius: 0 20px 20px 0;
+        background: #f0f0f0;
+        color: #555;
+        cursor: pointer;
+    }
+
+    .logout-mobile-btn {
+        background: none;
+        border: none;
+        padding: 10px 0;
+        color: #555;
+        cursor: pointer;
+        text-align: left;
     }
 }

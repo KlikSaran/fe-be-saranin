@@ -44,22 +44,37 @@
         </form>
 
         <div class="nav-icons">
-            <a href="{{ route('baskets-public.index') }}" class="nav-icon" id="navbarKeranjangBtn">
-                <i class="fas fa-shopping-cart"></i>
-                <span>Keranjang</span>
+            <a href="{{ route('index') }}" class="nav-icon {{ request()->routeIs('index') ? 'active' : '' }}"
+                id="navbarBerandaBtn">
+                <i class="fas fa-home"></i>
+                <span>Beranda</span>
             </a>
 
-            <a href="{{ route('transactions-public.index') }}" class="nav-icon" id="navbarTransaksiBtn">
+            <a href="{{ route('baskets-public.index') }}"
+                class="nav-icon {{ request()->routeIs('baskets-public.index') ? 'active' : '' }}"
+                id="navbarKeranjangBtn" style="position: relative;">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Keranjang</span>
+
+                @if(isset($cartCount) && $cartCount > 0)
+                    <span class="badge-cart">{{ $cartCount }}</span>
+                @endif
+            </a>
+
+            <a href="{{ route('transactions-public.index') }}"
+                class="nav-icon {{ request()->routeIs('transactions-public.index') ? 'active' : '' }}"
+                id="navbarTransaksiBtn">
                 <i class="fas fa-file-invoice"></i>
                 <span>Transaksi</span>
             </a>
 
-            @guest {{-- Check if user is a guest (not logged in) --}}
-                <a href="{{ route('login') }}" class="nav-icon" id="navbarLoginBtn">
+            @guest
+                <a href="{{ route('login') }}" class="nav-icon {{ request()->routeIs('login') ? 'active' : '' }}"
+                    id="navbarLoginBtn">
                     <i class="fas fa-sign-in-alt"></i>
                     <span>Login</span>
                 </a>
-            @else {{-- User is authenticated --}}
+            @else
                 <div class="profile-container">
                     <a href="#" class="nav-icon" id="navbarProfileBtn" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user-circle"></i>
@@ -67,11 +82,17 @@
                     </a>
                     <div class="profile-dropdown" id="navbarProfileDropdown" aria-labelledby="navbarProfileBtn">
                         @if (Auth::user()->role == 'admin')
-                            <a href="{{ route('dashboards.index') }}"><i class="fas fa-home"></i> Dashboard</a>
+                            <a href="{{ route('dashboards.index') }}"
+                                class="{{ request()->routeIs('dashboards.index') ? 'active' : '' }}">
+                                <i class="fas fa-home"></i> Dashboard
+                            </a>
                         @endif
                         <div class="divider"></div>
-                        {{-- <a href="{{ route('profiles-public.index') }}"><i class="fas fa-user-cog"></i> Setting Profil</a>
-                        <div class="divider"></div> --}}
+                        <a href="{{ route('profiles-public.index') }}"
+                            class="{{ request()->routeIs('profiles-public.index') ? 'active' : '' }}">
+                            <i class="fas fa-user-cog"></i> Edit Profil
+                        </a>
+                        <div class="divider"></div>
                         <form method="POST" action="{{ route('logout') }}" style="margin:0;">
                             @csrf
                             <button type="submit" id="logoutBtn">
@@ -81,6 +102,53 @@
                         </form>
                     </div>
                 </div>
+            @endguest
+        </div>
+
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <div class="nav-mobile-menu" id="mobileMenu">
+            <form action="{{ route('search.consumer.product') }}" method="get" class="mobile-search">
+                <input type="text" name="query" placeholder="Cari produk..." value="{{ request('query') ?? '' }}">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+
+            <a href="{{ route('index') }}">Beranda</a>
+
+            <div class="mobile-kategori-wrapper">
+                <button class="kategori-btn" id="mobileKategoriBtn">
+                    <i class="fas fa-bars"></i><span>Kategori</span>
+                </button>
+                <div class="kategori-dropdown" id="mobileKategoriDropdown">
+                    <div class="kategori-grid">
+                        @foreach ($categories ?? [] as $category)
+                            <a href="#" class="kategori-card" data-category="{{ $category['category'] }}">
+                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->category }}">
+                                <span>{{ $category['category'] }}</span>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+
+            <a href="{{ route('baskets-public.index') }}">Keranjang</a>
+            <a href="{{ route('transactions-public.index') }}">Transaksi</a>
+
+            @guest
+                <a href="{{ route('login') }}">Login</a>
+            @else
+                <a href="{{ route('profiles-public.index') }}">Edit Profil</a>
+                @if (Auth::user()->role == 'admin')
+                    <a href="{{ route('dashboards.index') }}">Dashboard</a>
+                @endif
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="logout-mobile-btn">Logout</button>
+                </form>
             @endguest
         </div>
     </nav>
@@ -131,4 +199,19 @@
         });
     });
 
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileKategoriBtn = document.getElementById('mobileKategoriBtn');
+    const mobileKategoriDropdown = document.getElementById('mobileKategoriDropdown');
+
+    hamburger.addEventListener('click', () => {
+        mobileMenu.classList.toggle('show');
+    });
+
+    if (mobileKategoriBtn && mobileKategoriDropdown) {
+        mobileKategoriBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            mobileKategoriDropdown.classList.toggle('show');
+        });
+    }
 </script>

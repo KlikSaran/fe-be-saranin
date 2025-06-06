@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Public;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProfileController extends Controller
 {
@@ -15,7 +20,9 @@ class ProfileController extends Controller
     {
         $categories = Product::select('category', 'image')->get()->unique('category');
 
-        return view('public.profile.index', compact('categories'));
+        $profiles = User::where('id', Auth::id())->first();
+
+        return view('public.profile.index', compact('categories', 'profiles'));
     }
 
     /**
@@ -55,7 +62,59 @@ class ProfileController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        if ($user->id !== Auth::id()) {
+            abort(403, 'UNAUTHORIZED ACTION.');
+        }
+
+        $validatedData = $request->validate([
+            'fullname' => 'required|string|max:255',
+            'email'    => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+            ],
+            'gender'   => 'nullable|in:Male,Female',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        $user->fullname = $validatedData['fullname'];
+        $user->email = $validatedData['email'];
+        $user->gender = $validatedData['gender'];
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($validatedData['password']);
+        }
+
+        $user->save();
+
+        return redirect()->back()->with('profileUpdateAlert', 'Biodata Anda berhasil diperbarui!');
+    }
+
+    public function updateAvatar(Request $request)
+    {
+        $user = Auth::user();
+
+        if (!$user) {
+            abort(403, 'UNAUTHORIZED ACTION.');
+        }
+
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($user->avatar) {
+            Storage::disk('public')->delete($user->avatar);
+        }
+
+        $path = $request->file('avatar')->store('avatars', 'public');
+
+        $user->avatar = $path;
+        $user->save();
+
+        return redirect()->back()->with('avatarUpdateAlert', 'Foto profil berhasil diperbarui!');
     }
 
     /**

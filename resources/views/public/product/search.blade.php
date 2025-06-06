@@ -77,7 +77,7 @@
                 @if($products->isEmpty())
                     <div class="no-products">
                         <h3>Produk tidak ditemukan</h3>
-                        <p>Silakan cari produk lainnya.</p>
+                        <p>Silahkan cari produk lainnya.</p>
                     </div>
                 @endif
                 @foreach ($products as $product)

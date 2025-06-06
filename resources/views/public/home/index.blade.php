@@ -2,7 +2,6 @@
 @section('content')
     <x-navbar-public :categories="$categories"></x-navbar-public>
 
-    <!-- REKOMENDASI -->
     @auth
         <section class="recommendation-section" id="recommendation-section">
 

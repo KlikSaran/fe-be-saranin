@@ -58,9 +58,6 @@
                 <input type="hidden" name="total_price" id="totalPriceInput">
                 <button type="submit" class="pay-btn" id="payButton">Beli Langsung</button>
             </form>
-
-
-
         </div>
     </div>
 

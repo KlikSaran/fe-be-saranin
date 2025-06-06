@@ -6,7 +6,6 @@
 
 body {
     background-color: #f5f5f5;
-    /* padding: 20px; */
 }
 
 .main-container {
@@ -169,6 +168,11 @@ body {
 #zoomImage {
     width: 20px;
     height: auto;
+}
+
+.cart-item-link {
+    text-decoration: none;
+    color: inherit;
 }
 
 @media (max-width: 768px) {

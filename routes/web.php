@@ -23,6 +23,12 @@ use App\Http\Controllers\Public\SearchProductController;
 Route::resource('/', HomeController::class);
 
 Route::middleware('auth')->group(function () {
+    // Admin Routes
+    Route::resource('/dashboards', DashboardController::class);
+    Route::resource('/products', AdminProductController::class);
+    Route::resource('/transactions', AdminTransactionController::class);
+    Route::resource('/consumers', AdminConsumerController::class);
+
     // Public Routes
     Route::resource('/baskets-public', BasketController::class);
     Route::resource('/profiles-public', ProfileController::class);
@@ -30,14 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('/products-public', ProductController::class);
     Route::get('/checkout/preview', [CheckoutController::class, 'preview'])->name('checkout.preview');
     Route::post('/checkout/submit', [CheckoutController::class, 'submit'])->name('checkout.submit');
-    Route::get('/products/{name}', [ProductController::class, 'showRecommendationProductDetail'])->name('products-recommendation-public.show');
     Route::put('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('avatar.update');
-
-    // Admin Routes
-    Route::resource('/dashboards', DashboardController::class);
-    Route::resource('/products', AdminProductController::class);
-    Route::resource('/transactions', AdminTransactionController::class);
-    Route::resource('/consumers', AdminConsumerController::class);
+    Route::get('/products/{name}', [ProductController::class, 'showRecommendationProductDetail'])->name('products-recommendation-public.show');
 
     // Searching Routes
     Route::get('/search/product', [AdminProductController::class, 'search'])->name('search.product');

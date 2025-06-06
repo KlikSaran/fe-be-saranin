@@ -63,20 +63,20 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             @auth
-                                        const loggedInUserId = {{ Auth::user()->id }};
+                const loggedInUserId = {{ Auth::user()->id }};
                 console.log("ID User Login:", loggedInUserId);
 
                 fetchRecommendations(loggedInUserId);
                 fetchCBRecommendations(loggedInUserId);
             @else
-                                        const recommendationSection = document.getElementById('recommendation-section');
+                const recommendationSection = document.getElementById('recommendation-section');
                 if (recommendationSection) {
                     recommendationSection.style.display = 'none';
                 }
             @endauth
 
                 function fetchRecommendations(userId) {
-                    fetch("http://127.0.0.1:5000/predict", {
+                    fetch("https://gibbon-direct-neatly.ngrok-free.app/predict", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ id_user: userId, count_items: 20 })
@@ -111,7 +111,7 @@
                 }
 
             function fetchCBRecommendations(userId) {
-                fetch("http://127.0.0.1:5000/predictcb", {
+                fetch("https://gibbon-direct-neatly.ngrok-free.app/predictcb", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ id_user: userId, count_items: 20 })
@@ -141,15 +141,15 @@
                     const item = document.createElement('div');
                     item.className = 'recommendation-item';
                     item.innerHTML = `
-                                        <a href="/products/${encodeURIComponent(product.name)}" class="recommendation-card-link">
-                                            <div class="product-card">
-                                                <img src="${getProductImage(product)}" alt="${product.name}" loading="lazy" />
-                                                <h3>${product.name}</h3>
-                                                <p>Rp ${parseInt(product.harga).toLocaleString('id-ID')}</p>
-                                                <p>${product.category}</p>
-                                            </div>
-                                        </a>
-                                    `;
+                                            <a href="/products/${encodeURIComponent(product.name)}" class="recommendation-card-link">
+                                                <div class="product-card">
+                                                    <img src="${getProductImage(product)}" alt="${product.name}" loading="lazy" />
+                                                    <h3>${product.name}</h3>
+                                                    <p>Rp ${parseInt(product.harga).toLocaleString('id-ID')}</p>
+                                                    <p>${product.category}</p>
+                                                </div>
+                                            </a>
+                                        `;
                     container.appendChild(item);
                 });
             }
@@ -160,15 +160,15 @@
                     const item = document.createElement('div');
                     item.className = 'recommendation-item';
                     item.innerHTML = `
-                                        <a href="/products/${encodeURIComponent(product.name)}" class="recommendation-card-link">
-                                            <div class="product-card">
-                                                <img src="${getProductImage(product)}" alt="${product.name}" loading="lazy" />
-                                                <h3>${product.name}</h3>
-                                                <p>Rp ${parseInt(product.harga).toLocaleString('id-ID')}</p>
-                                                <p>${product.category}</p>
-                                            </div>
-                                        </a>
-                                    `;
+                                            <a href="/products/${encodeURIComponent(product.name)}" class="recommendation-card-link">
+                                                <div class="product-card">
+                                                    <img src="${getProductImage(product)}" alt="${product.name}" loading="lazy" />
+                                                    <h3>${product.name}</h3>
+                                                    <p>Rp ${parseInt(product.harga).toLocaleString('id-ID')}</p>
+                                                    <p>${product.category}</p>
+                                                </div>
+                                            </a>
+                                        `;
                     container.appendChild(item);
                 });
             }

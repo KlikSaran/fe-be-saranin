@@ -76,7 +76,7 @@
             @endauth
 
                 function fetchRecommendations(userId) {
-                    fetch("https://gibbon-direct-neatly.ngrok-free.app/predict", {
+                    fetch("http://127.0.0.1:5000/predict", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ id_user: userId, count_items: 20 })
@@ -111,7 +111,7 @@
                 }
 
             function fetchCBRecommendations(userId) {
-                fetch("https://gibbon-direct-neatly.ngrok-free.app/predictcb", {
+                fetch("http://127.0.0.1:5000/predictcb", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ id_user: userId, count_items: 20 })
@@ -141,7 +141,7 @@
                     const item = document.createElement('div');
                     item.className = 'recommendation-item';
                     item.innerHTML = `
-                                            <a href="/products/${encodeURIComponent(product.name)}" class="recommendation-card-link">
+                                            <a href="/detail-product-public/${encodeURIComponent(product.name)}" class="recommendation-card-link">
                                                 <div class="product-card">
                                                     <img src="${getProductImage(product)}" alt="${product.name}" loading="lazy" />
                                                     <h3>${product.name}</h3>
@@ -160,7 +160,7 @@
                     const item = document.createElement('div');
                     item.className = 'recommendation-item';
                     item.innerHTML = `
-                                            <a href="/products/${encodeURIComponent(product.name)}" class="recommendation-card-link">
+                                            <a href="/detail-product-public/${encodeURIComponent(product.name)}" class="recommendation-card-link">
                                                 <div class="product-card">
                                                     <img src="${getProductImage(product)}" alt="${product.name}" loading="lazy" />
                                                     <h3>${product.name}</h3>

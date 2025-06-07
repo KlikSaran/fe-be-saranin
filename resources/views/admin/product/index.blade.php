@@ -26,7 +26,7 @@
                                     </button>
                                 </div>
                             </form>
-                            {{-- <a href="{{ route('products.create') }}" class="btn btn-primary">Tambah Produk</a> --}}
+                            <a href="{{ route('products.create') }}" class="btn btn-primary">Tambah Produk</a>
                         </div>
                         <div class="card-body d-flex flex-column align-items-center">
                             <table class="table table-hover">
@@ -69,15 +69,15 @@
                                                         <span>Tidak ada gambar</span>
                                                     @endif
                                                 </td>
-                                                {{-- <td>
-                                                    <button type="button" class="btn btn-sm btn-warning edit-button"
+                                                <td>
+                                                    {{-- <button type="button" class="btn btn-sm btn-warning edit-button"
                                                         data-id="{{ $product->id }}" data-name="{{ $product->name }}"
                                                         data-category="{{ $product->category }}"
                                                         data-price="{{ $product->price }}" data-stock="{{ $product->stock }}"
                                                         data-description="{{ $product->description }}"
                                                         data-image="{{ $product->image }}">
                                                         <i class="fas fa-edit"></i> Edit
-                                                    </button>
+                                                    </button> --}}
                                                     <form id="deleteForm-{{ $product->id }}"
                                                         action="{{ route('products.destroy', $product->id) }}" method="POST"
                                                         class="ms-2 d-inline">
@@ -86,7 +86,7 @@
                                                         <button type="button" class="btn btn-danger btn-sm delete-btn"
                                                             data-id="{{ $product->id }}">Hapus</button>
                                                     </form>
-                                                </td> --}}
+                                                </td>
                                             </tr>
                                         @empty
                                             <tr>

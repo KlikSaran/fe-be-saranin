@@ -1,66 +1,86 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Website Rekomendasi Produk Supermarket
+Website ini dirancang untuk memberikan rekomendasi produk berdasarkan pencocokkan daftar produk yang pernah dibeli oleh pelanggan lainnya dan juga pencocokkan daftar produk sesuai preferensi pelanggan yang memiliki riwayat transaksi sebelumnya. Website ini juga memiliki fitur tambahan lainnya seperti transaksi, pencarian dan filter produk. 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Daftar Pengguna
+Website ini memilki 2 jenis pengguna, yaitu:
 
-## About Laravel
+**Admin**
+   - Melihat indikator data statistik tentang akumulasi total pelanggan, produk, transaksi, terjual dan riwayat penambahan produk.
+   - Melihat, menambahkan dan menghapus data produk.
+   - Melihat daftar data transaksi yang pernah dilakukan pelanggan.
+   - Melihat daftar data pelanggan yang sudah terdaftar pada sistem.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Pelanggan**
+   - Mendapatkan rekomendasi produk sesuai daftar produk yang pernah dibeli oleh pelanggan lain dan juga berdasarkan preferensi dari riwayat transaksi sebelumnya.
+   - Transaksi pembelian produk.
+   - Pencarian produk.
+   - filter produk berdasarkan harga dan kategori.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur Utama
+- **Rekomendasi Produk - (Admin & Pelanggan)**  
+- **Transaksi Pembelian Produk - (Admin & Pelanggan)**
+- **Pencarian Produk - (Admin & Pelanggan)**
+- **Filter Produk - (Admin & Pelanggan)**
+- **Panel Admin - (Admin)**
+- **Autentikasi User - (Admin & Pelanggan)** 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Instalasi
+1. Clone repository ini ke dalam folder lokal Anda, misal nama folder adalah saranin.id :
+    ```bash
+    git clone https://github.com/KlikSaran/fe-be-saranin.git
+    ```
+    
+2. Masuk ke folder dan install dependensi yang diperlukan :
+    ```bash
+    cd saranin.id
+    npm install
+    ```
 
-## Learning Laravel
+3. Tambahkan file `.env` dengan menyalin file `.env.example` :
+   ```bash
+   cp .env.example .env
+   ```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+4. Buat kunci aplikasi (APP_KEY) di file `.env` :
+   ```bash
+   php artisan key:generate
+   ```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+5. Konfigurasi basis data MySQL (XAMPP, Laragon, DBeaver, dll). Sesuaikan pengaturan koneksi database di file `.env` .
+   
+6. Jalankan module bundler di mode development :
+   ```bash
+   npm run dev
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+7. Jalankan aplikasi pada web browser :
+    ```bash
+    php artisan serve
+    ```
 
-## Laravel Sponsors
+8. Akses aplikasi melalui browser di `http://localhost:8000` atau alamat IP laptop masing-masing.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Teknologi yang Digunakan
+- **Frontend**: HTML5, Javascript, Bootstrap, CSS.
+- **Backend**: PHP, Flask.
+- **Database**: MySQL (XAMPP, Laragon, DBeaver, dll).
+- **Authentication**: DB Seeder untuk akun admin, pelanggan dan pendaftaran manual untuk pelanggan baru.
+- **Version Control**: Git, GitHub.
 
-### Premium Partners
+## Penggunaan
+**Login Admin**:  
+   Email: `admin@gmail.com`  
+   Password: `admin123`
+   
+**Login Pelanggan**:  
+   Dapat mendaftar manual atau jika ingin melihat akun pelanggan yang telah terdaftar sebelumnya dapat menghubungi pengembang sistem.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Kontribusi
+Jika Anda ingin berkontribusi dalam pengembangan proyek ini, silakan lakukan **fork** repository ini dan kirimkan **pull request** dengan deskripsi perubahan yang jelas.
 
-## Contributing
+## Kontak
+Jika Anda memiliki pertanyaan lebih lanjut, silakan hubungi kami di:  
+- Email: mahennekkers27@gmail.com
+- No. WA: 0895807400305
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\DetailTransaction;
 use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -17,8 +18,9 @@ class HomeController extends Controller
     {
         $products = Product::orderBy('created_at', 'desc')->paginate(20);
         $categories = Product::select('category', 'image')->get()->unique('category');
+        $hasTransactionHistory = Transaction::where('user', Auth::id())->exists();
 
-        return view('public.home.index', compact('products', 'categories'));
+        return view('public.home.index', compact('products', 'categories', 'hasTransactionHistory'));
     }
 
     /**

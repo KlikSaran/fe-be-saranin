@@ -74,6 +74,11 @@
                     <i class="fas fa-sign-in-alt"></i>
                     <span>Login</span>
                 </a>
+                <a href="{{ route('register.form') }}"
+                    class="nav-icon {{ request()->routeIs('register.form') ? 'active' : '' }}" id="navbarLoginBtn">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Register</span>
+                </a>
             @else
                 <div class="profile-container">
                     <a href="#" class="nav-icon" id="navbarProfileBtn" aria-haspopup="true" aria-expanded="false">

@@ -2,9 +2,7 @@
 <nav class="pc-sidebar">
     <div class="navbar-wrapper">
         <div class="m-header d-flex justify-content-center">
-            {{-- <a href="{{ route('client_admin.index') }}" class="b-brand text-primary"></a> --}}
-            <img src="{{ asset('assets_admin/images/favicon.svg') }}" alt="saranin.id logo" class="img-fluid"
-                width="50%">
+            <a href="{{ route('dashboards.index') }}" class="b-brand text-black">saranin.id</a>
         </div>
         <div class="navbar-content">
             <ul class="pc-navbar">

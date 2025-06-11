@@ -40,34 +40,72 @@
                 <div class="card my-5">
                     <div class="card-body">
                         <div class="d-flex justify-content-center mb-4">
-                            <h3 class="mb-0"><b>Login</b></h3>
+                            <h3 class="mb-0"><b>Register</b></h3>
                         </div>
-                        <form action="{{ route('login.submit') }}" method="POST" class="form-login">
+                        <form action="{{ route('register') }}" method="POST" class="form-login">
                             @csrf
+
                             <div class="form-group mb-3">
-                                <label class="form-label">Email Address</label>
+                                <label class="form-label">Nama Lengkap</label>
+                                <input type="text" id="fullname" name="fullname" class="form-control"
+                                    placeholder="fullname" autofocus value="{{ old('fullname') }}">
+                                @error('fullname')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Alamat Email</label>
                                 <input type="email" id="email" name="email" class="form-control"
-                                    placeholder="Email Address" autofocus value={{ old('email') }}>
+                                    placeholder="Email Address" value="{{ old('email') }}">
                                 @error('email')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             <div class="form-group mb-3">
-                                <label class="form-label">Password</label>
+                                <label class="form-label">Jenis Kelamin</label>
+                                <select name="gender" class="form-select">
+                                    <option value="" selected disabled>-- Pilih Jenis Kelamin --</option>
+                                    <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Laki-Laki
+                                    </option>
+                                    <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Perempuan
+                                    </option>
+                                    <option value="Polygender" {{ old('gender') == 'Polygender' ? 'selected' : '' }}>
+                                        Lainnya</option>
+                                </select>
+                                @error('gender')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Sandi Akun</label>
                                 <input type="password" id="password" name="password" class="form-control"
-                                    placeholder="Password" value={{ old('password') }}>
+                                    placeholder="Password">
                                 @error('password')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="form-group mb-3">
+                                <label class="form-label">Konfirmasi Sandi Akun</label>
+                                <input type="password" id="password_confirmation" name="password_confirmation"
+                                    class="form-control" placeholder="Ulangi Password">
+                                @error('password_confirmation')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
                             <div class="d-grid mt-4">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                                <button type="submit" class="btn btn-primary">Register</button>
                             </div>
                             <div class="d-flex align-items-center flex-column mt-3">
-                                <li class="list-inline-item mt-2"><a href="{{ route('register.form') }}">Belum Memiliki
-                                        Akun? Daftar Sekarang</a></li>
-                                <li class="list-inline-item mt-2"><a href="{{ route('index') }}">Kembali ke Beranda</a>
-                                </li>
+                                <li class="list-inline-item mt-2"><a href="{{ route('login') }}">Sudah Memiliki
+                                        Akun? Login
+                                        Sekarang</a></li>
+                                <li class="list-inline-item mt-2"><a href="{{ route('index') }}">Kembali ke
+                                        Beranda</a></li>
                             </div>
                         </form>
                     </div>
@@ -77,6 +115,10 @@
                     <div class="col my-1">
                         <p class="m-0">Copyright © <a href="#">Codedthemes</a></p>
                     </div>
+                    {{-- <div class="col-auto my-1">
+                        <ul class="list-inline footer-link mb-0">
+                        </ul>
+                    </div> --}}
                     <!-- </div> -->
                 </div>
             </div>

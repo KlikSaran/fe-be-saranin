@@ -1,0 +1,217 @@
+{
+  "meta": {
+    "format": "httpie",
+    "version": "1.0.0",
+    "contentType": "collection",
+    "schema": "https://schema.httpie.io/1.0.0.json",
+    "docs": "https://httpie.io/r/help/export-from-httpie",
+    "source": "HTTPie Desktop 2025.2.0"
+  },
+  "entry": {
+    "name": "saranin-restfulapi",
+    "icon": {
+      "name": "heart",
+      "color": "pink"
+    },
+    "auth": {
+      "type": "none"
+    },
+    "requests": [
+      {
+        "name": "Get All Product",
+        "url": "http://127.0.0.1:8000/api/product",
+        "method": "GET",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "none",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "Add Product",
+        "url": "http://127.0.0.1:8000/api/product",
+        "method": "POST",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "form",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": [
+              {
+                "name": "name",
+                "value": "cuanki goreng",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "category",
+                "value": "snack",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "description",
+                "value": "cuanki ini lezat saat dimakan bersama dengan bakso.",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "price",
+                "value": "20000",
+                "enabled": true,
+                "type": "text"
+              }
+            ]
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "Get Detail Product",
+        "url": "http://127.0.0.1:8000/api/product/228",
+        "method": "GET",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "none",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "Update Product with Spesific ID",
+        "url": "http://127.0.0.1:8000/api/product/228",
+        "method": "PUT",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "form",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": [
+              {
+                "name": "name",
+                "value": "cuanki basah",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "category",
+                "value": "kue kering",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "description",
+                "value": "enak beut dah",
+                "enabled": true,
+                "type": "text"
+              },
+              {
+                "name": "price",
+                "value": "3000",
+                "enabled": true,
+                "type": "text"
+              }
+            ]
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      },
+      {
+        "name": "Delete Product with Spesific ID",
+        "url": "http://127.0.0.1:8000/api/product/227",
+        "method": "DELETE",
+        "headers": [],
+        "queryParams": [],
+        "pathParams": [],
+        "auth": {
+          "type": "inherited"
+        },
+        "body": {
+          "type": "none",
+          "file": {
+            "name": ""
+          },
+          "text": {
+            "value": "",
+            "format": "application/json"
+          },
+          "form": {
+            "isMultipart": false,
+            "fields": []
+          },
+          "graphql": {
+            "query": "",
+            "variables": ""
+          }
+        }
+      }
+    ]
+  }
+}

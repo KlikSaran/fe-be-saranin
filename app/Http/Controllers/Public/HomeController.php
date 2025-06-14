@@ -18,7 +18,7 @@ class HomeController extends Controller
     {
         $products = Product::orderBy('created_at', 'desc')->paginate(20);
         $categories = Product::select('category', 'image')->get()->unique('category');
-        $hasTransactionHistory = Transaction::where('user', Auth::id())->exists();
+        $hasTransactionHistory = Transaction::where('user_id', Auth::id())->exists();
 
         return view('public.home.index', compact('products', 'categories', 'hasTransactionHistory'));
     }

@@ -25,11 +25,13 @@ Route::resource('/', HomeController::class);
 
 Route::middleware('auth')->group(function () {
 
-    // Admin Routes
-    Route::resource('/dashboards', DashboardController::class);
-    Route::resource('/products', AdminProductController::class);
-    Route::resource('/transactions', AdminTransactionController::class);
-    Route::resource('/consumers', AdminConsumerController::class);
+    Route::middleware(['role.admin'])->group(function () {
+        // Admin Routes
+        Route::resource('/dashboards', DashboardController::class);
+        Route::resource('/products', AdminProductController::class);
+        Route::resource('/transactions', AdminTransactionController::class);
+        Route::resource('/consumers', AdminConsumerController::class);
+    });
 
     // Public Routes
     Route::resource('/baskets-public', BasketController::class);
